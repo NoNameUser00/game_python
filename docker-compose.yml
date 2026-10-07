@@ -1,0 +1,43 @@
+# Локальная копия, максимально близкая к боевой (Oracle Cloud).
+# Запуск:  docker compose up --build
+# Игра:    http://localhost:8080
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: game
+      POSTGRES_PASSWORD: game-local
+      POSTGRES_DB: game
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U game -d game"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg://game:game-local@db:5432/game
+      JWT_SECRET: local-dev-secret           # в проде — из секретов/секретного хранилища!
+      RUNNER_MODE: local                     # в проде: docker (песочница в контейнере)
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+
+volumes:
+  pgdata:
