@@ -1,0 +1,75 @@
+slug: conditions
+title: Условия
+icon: "🔀"
+order: 2
+lessons:
+  - slug: if-else
+    title: Если и иначе
+    order: 1
+    tasks:
+      - slug: is-even
+        title: Чётное или нечётное
+        difficulty: 2
+        xp_reward: 20
+        function: is_even
+        prompt_md: |
+          ## Чётная ли число? 🎯
+
+          Напиши функцию `is_even(n)`, которая возвращает `True`,
+          если число `n` чётное, и `False` — если нечётное.
+
+          **Примеры:**
+          - `is_even(4)` → `True`
+          - `is_even(7)` → `False`
+
+          > Подсказка: остаток от деления на 2 считает оператор `%`
+        starter_code: |
+          def is_even(n):
+              # верни True или False
+              pass
+        hints:
+          - "Чётные числа делятся на 2 без остатка: n % 2 == 0"
+          - "Напиши: return n % 2 == 0"
+        tests:
+          - input: [4]
+            expected: true
+          - input: [7]
+            expected: false
+          - input: [0]
+            expected: true
+          - input: [-3]
+            expected: false
+
+      - slug: max-of-three
+        title: Максимум из трёх
+        difficulty: 2
+        xp_reward: 25
+        function: maximum
+        prompt_md: |
+          ## Самое большое число 🏆
+
+          Напиши функцию `maximum(a, b, c)`, которая возвращает
+          наибольшее из трёх чисел.
+
+          **Примеры:**
+          - `maximum(1, 2, 3)` → `3`
+          - `maximum(5, 5, 5)` → `5`
+          - `maximum(-1, -5, -2)` → `-1`
+
+          > Можно использовать `if`, `elif`, `else` — а можно встроенную функцию `max()`.
+        starter_code: |
+          def maximum(a, b, c):
+              # верни наибольшее из трёх
+              pass
+        hints:
+          - "В Python есть встроенная функция max(a, b, c)"
+          - "Если хочешь сам: сначала сравни a и b, потом победителя с c"
+        tests:
+          - input: [1, 2, 3]
+            expected: 3
+          - input: [5, 5, 5]
+            expected: 5
+          - input: [-1, -5, -2]
+            expected: -1
+          - input: [10, 2, 7]
+            expected: 10

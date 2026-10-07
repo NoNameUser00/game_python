@@ -21,3 +21,14 @@ Thumbs.db
 # Логи и бэкапы
 *.log
 *.bak
+
+# База данных (создаётся при старте)
+backend/game.db
+backend/tests/*.db
+
+# Фронтенд
+frontend/node_modules/
+frontend/dist/
+
+# Запуск в фоне
+nohup.out

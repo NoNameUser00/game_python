@@ -1,0 +1,74 @@
+slug: loops
+title: Циклы
+icon: "🔁"
+order: 3
+lessons:
+  - slug: for-loops
+    title: Цикл for
+    order: 1
+    tasks:
+      - slug: sum-to-n
+        title: Сумма чисел от 1 до n
+        difficulty: 2
+        xp_reward: 25
+        function: total
+        prompt_md: |
+          ## Сумма от 1 до n 🔢
+
+          Напиши функцию `total(n)`, которая возвращает сумму всех чисел
+          от 1 до `n` включительно.
+
+          **Примеры:**
+          - `total(5)` → `15` (1+2+3+4+5)
+          - `total(1)` → `1`
+          - `total(0)` → `0`
+        starter_code: |
+          def total(n):
+              # посчитай сумму от 1 до n
+              pass
+        hints:
+          - "Заведи переменную-накопитель sum_ = 0 и цикл for i in range(1, n + 1)"
+          - "В каждой итерации прибавляй i к накопителю, а в конце — верни его"
+        tests:
+          - input: [5]
+            expected: 15
+          - input: [1]
+            expected: 1
+          - input: [0]
+            expected: 0
+          - input: [10]
+            expected: 55
+
+      - slug: factorial
+        title: Факториал
+        difficulty: 3
+        xp_reward: 30
+        function: fact
+        prompt_md: |
+          ## Факториал ⚙️
+
+          Факториал числа `n` — это произведение всех чисел от 1 до `n`.
+          Факториал 0 равен 1.
+
+          Напиши функцию `fact(n)`, которая возвращает `n!`.
+
+          **Примеры:**
+          - `fact(0)` → `1`
+          - `fact(1)` → `1`
+          - `fact(5)` → `120` (1·2·3·4·5)
+        starter_code: |
+          def fact(n):
+              # посчитай факториал
+              pass
+        hints:
+          - "Начни результат с 1 и умножай его на каждое число от 1 до n"
+          - "result = 1, потом: for i in range(1, n + 1): result *= i"
+        tests:
+          - input: [0]
+            expected: 1
+          - input: [1]
+            expected: 1
+          - input: [5]
+            expected: 120
+          - input: [7]
+            expected: 5040

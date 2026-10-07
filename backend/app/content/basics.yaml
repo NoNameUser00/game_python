@@ -1,0 +1,72 @@
+slug: basics
+title: Основы Python
+icon: "🐍"
+order: 1
+lessons:
+  - slug: strings
+    title: Строки и текст
+    order: 1
+    tasks:
+      - slug: greeting
+        title: Приветствие
+        difficulty: 1
+        xp_reward: 15
+        function: hello
+        prompt_md: |
+          ## Приветствие 👋
+
+          Напиши функцию `hello(name)`, которая возвращает текст вида:
+
+          ```
+          Привет, Мир!
+          ```
+
+          **Примеры:**
+          - `hello("Мир")` → `Привет, Мир!`
+          - `hello("Python")` → `Привет, Python!`
+        starter_code: |
+          def hello(name):
+              # напиши свой код здесь
+              pass
+        hints:
+          - "Используй f-строку: f'Привет, {name}!'"
+          - "Подойдёт и сложение строк: 'Привет, ' + name + '!'"
+        tests:
+          - input: ["Мир"]
+            expected: "Привет, Мир!"
+          - input: ["Python"]
+            expected: "Привет, Python!"
+          - input: ["Кот"]
+            expected: "Привет, Кот!"
+
+  - slug: numbers
+    title: Числа и вычисления
+    order: 2
+    tasks:
+      - slug: sum-two
+        title: Сумма двух чисел
+        difficulty: 1
+        xp_reward: 15
+        function: add
+        prompt_md: |
+          ## Сумма ➕
+
+          Напиши функцию `add(a, b)`, которая возвращает сумму двух чисел.
+
+          **Примеры:**
+          - `add(2, 3)` → `5`
+          - `add(-1, 4)` → `3`
+        starter_code: |
+          def add(a, b):
+              # верни сумму a и b
+              pass
+        hints:
+          - "Оператор сложения в Python — это +"
+          - "Функция должна что-то возвращать: return a + b"
+        tests:
+          - input: [2, 3]
+            expected: 5
+          - input: [-1, 4]
+            expected: 3
+          - input: [10, 20]
+            expected: 30
