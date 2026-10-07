@@ -14,6 +14,14 @@
 | npm: react, react-router-dom, vite, @uiw/react-codemirror, @codemirror/lang-python, @uiw/codemirror-themes, react-markdown | фронтенд игры | делает субагент в `frontend/` (npm create vite) |
 | Docker-образы: python:3.12-slim, node:20-slim, nginx:1.27-alpine, postgres:16-alpine | локальный «продакшн»-подобный запуск `docker compose up` | образы тянутся при сборке |
 
+## Решения по фронтенду (приняты субагентом при сборке)
+
+13. **Vite 6.x** (не 8): Vite 8 требует Node 20.19+, в системе Node 20.14.0 — нативные биндинги `@rolldown/*` не ставились. Связка: vite@6 + @vitejs/plugin-react@4.
+14. **React 19, react-router-dom 7, TypeScript 6** — как поставил шаблон create-vite (условие ≥18 выполнено).
+15. **Тема редактора** — Dracula собрана вручную через `createTheme` (`@uiw/codemirror-themes` не экспортирует готовых тем).
+16. **Линтер oxlint не работает** на Node 20.14 (тот же нативный биндинг) — на сборку не влияет; при обновлении Node подключить ESLint.
+17. **Проверка в браузере (e2e вручную)**: регистрация → карта (6 тем/12 задач) → задача → ввод кода → «Проверить» → 🎁 +15 XP, 3/3 теста ✅ → подсказка → профиль (15/100 XP) — всё зелёное, ошибок в консоли нет.
+
 ## Решения по архитектуре
 
 1. **Стек**: FastAPI + SQLModel (backend), React + Vite + TS (frontend) — выбраны пользователем/согласованы.

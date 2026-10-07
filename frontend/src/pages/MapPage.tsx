@@ -74,7 +74,6 @@ export default function MapPage() {
               <span className="topic-icon">{topic.icon}</span>
               <div>
                 <h2 className="topic-title">{topic.title}</h2>
-                <span className="topic-slug">{topic.slug}</span>
               </div>
             </header>
 
