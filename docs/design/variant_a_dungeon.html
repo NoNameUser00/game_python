@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Вариант A — «Крипт Кодов» (подземелье)</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --stone:#241d33; --stone2:#171225; --edge:#4a3d6b; --gold:#ffcc4d;
+    --torch:#ff9d2e; --ok:#5dd97f; --lock:#5a5170; --txt:#e8e2ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Press Start 2P',monospace; color:var(--txt); min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,157,46,.10), transparent 30%),
+      radial-gradient(circle at 85% 70%, rgba(255,157,46,.07), transparent 30%),
+      repeating-linear-gradient(0deg, #14101f 0 38px, #171326 38px 40px),
+      #14101f;
+    padding-bottom:40px;
+  }
+  header{
+    display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+    padding:18px 28px; background:linear-gradient(#241d33,#171225);
+    border-bottom:4px solid var(--edge); box-shadow:0 6px 0 #0b0814;
+  }
+  .logo{font-size:16px;color:var(--gold);text-shadow:3px 3px 0 #5a3b00}
+  .lvl{font-size:10px;background:#332a4d;padding:8px 12px;border:2px solid var(--edge)}
+  .xpwrap{flex:1;min-width:220px}
+  .xplabel{font-size:9px;color:#b8aee0;margin-bottom:6px}
+  .xpbar{height:18px;background:#0d0a17;border:2px solid var(--edge);position:relative}
+  .xpfill{height:100%;width:42%;background:linear-gradient(90deg,#ff9d2e,var(--gold));
+    box-shadow:0 0 12px rgba(255,204,77,.7)}
+  main{display:grid;grid-template-columns:1fr 320px;gap:22px;max-width:1150px;margin:26px auto;padding:0 20px}
+  .map{
+    position:relative;height:440px;background:linear-gradient(#1a1529,#120e1e);
+    border:4px solid var(--edge);box-shadow:inset 0 0 60px #000, 0 8px 0 #0b0814;
+    border-radius:6px;overflow:hidden;
+  }
+  .map::before{content:"🚪 КОРИДОР УРОВНЕЙ";position:absolute;top:10px;left:14px;
+    font-size:9px;color:#7d6fae;letter-spacing:1px}
+  .corridor{position:absolute;inset:0;width:100%;height:100%}
+  .node{position:absolute;transform:translate(-50%,-50%);text-align:center;cursor:pointer}
+  .door{
+    width:64px;height:76px;border:4px solid var(--lock);border-radius:30px 30px 4px 4px;
+    background:linear-gradient(#2b2340,#1b1530);display:flex;align-items:center;justify-content:center;
+    font-size:24px;box-shadow:0 0 0 4px #0d0a17;
+  }
+  .node.done .door{border-color:var(--ok);box-shadow:0 0 0 4px #0d0a17,0 0 18px rgba(93,217,127,.5)}
+  .node.current .door{
+    border-color:var(--gold);background:linear-gradient(#4a3411,#2b1e06);
+    box-shadow:0 0 0 4px #0d0a17,0 0 26px rgba(255,204,77,.8);
+    animation:pulse 1.2s infinite alternate;
+  }
+  @keyframes pulse{to{box-shadow:0 0 0 4px #0d0a17,0 0 44px rgba(255,204,77,1)}}
+  .node .cap{font-size:8px;margin-top:7px;color:#9c90c9;text-shadow:1px 1px 0 #000}
+  .node.current .cap{color:var(--gold)}
+  .panel{
+    background:linear-gradient(#241d33,#171225);border:4px solid var(--edge);
+    padding:18px;box-shadow:0 8px 0 #0b0814;height:fit-content;
+  }
+  .panel h2{font-size:12px;color:var(--gold);margin-bottom:10px;line-height:1.6}
+  .stars{color:var(--gold);font-size:12px;letter-spacing:3px;margin-bottom:12px}
+  .panel p{font-size:9px;line-height:1.9;color:#c9c0ef;margin-bottom:12px}
+  pre{font-family:'Press Start 2P',monospace;font-size:8px;line-height:1.9;background:#0d0a17;
+    border:2px solid var(--edge);padding:10px;color:#7fe8a5;margin-bottom:16px;overflow:auto}
+  .btn{display:block;width:100%;text-align:center;padding:14px;font-family:inherit;font-size:11px;
+    color:#2b1e06;background:linear-gradient(#ffd977,var(--gold));border:none;cursor:pointer;
+    box-shadow:0 5px 0 #8a6100;text-transform:uppercase}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #8a6100}
+  .note{max-width:1150px;margin:18px auto 0;padding:0 20px;font-size:8px;color:#6c5f97;line-height:2}
+  @media(max-width:900px){main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🗝 КРИПТ&nbsp;КОДОВ</div>
+  <div class="lvl">УРОВЕНЬ 1</div>
+  <div class="xpwrap">
+    <div class="xplabel">ОПЫТ: 42 / 100 &nbsp;✦&nbsp; ЗОЛОТО: 120</div>
+    <div class="xpbar"><div class="xpfill"></div></div>
+  </div>
+</header>
+
+<main>
+  <div class="map">
+    <svg class="corridor" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <polyline points="8,72 26,50 44,68 60,42 76,64 90,38"
+        fill="none" stroke="#3a3055" stroke-width="5" stroke-linejoin="miter"
+        vector-effect="non-scaling-stroke"/>
+      <polyline points="8,72 26,50 44,68"
+        fill="none" stroke="#5dd97f" stroke-width="3" stroke-dasharray="6 5"
+        vector-effect="non-scaling-stroke" opacity=".8"/>
+    </svg>
+    <div class="node done"    style="left:8%;top:72%"><div class="door">🔥</div><div class="cap">COMPLETED<br>1</div></div>
+    <div class="node done"    style="left:26%;top:50%"><div class="door">🔥</div><div class="cap">COMPLETED<br>2</div></div>
+    <div class="node current" style="left:44%;top:68%"><div class="door">🚪</div><div class="cap">ВОЙТИ<br>3</div></div>
+    <div class="node"         style="left:60%;top:42%"><div class="door">🔒</div><div class="cap">4</div></div>
+    <div class="node"         style="left:76%;top:64%"><div class="door">🔒</div><div class="cap">5</div></div>
+    <div class="node"         style="left:90%;top:38%"><div class="door">👑</div><div class="cap">БОСС</div></div>
+  </div>
+
+  <aside class="panel">
+    <h2>КОМНАТА 3: ПРИВЕТСТВИЕ</h2>
+    <div class="stars">★★☆</div>
+    <p>НАПИШИ ФУНКЦИЮ hello(name), КОТОРАЯ ВОЗВРАЩАЕТ «ПРИВЕТ, {name}!»</p>
+    <pre>def hello(name):
+    pass</pre>
+    <button class="btn">⚔ Проверить</button>
+  </aside>
+</main>
+
+<div class="note">
+  МОКАП ВАРИАНТА A · ТЁМНОЕ ПОДЗЕМЕЛЬЕ В ДУХЕ CODECOMBAT: КОМНАТЫ-УРОВНИ, ФАКЕЛЫ ВМЕСТО ГАЛОЧЕК,
+  СУНДУКИ И ЗОЛОТО ЗА ОПЫТ. ПИКСЕЛЬНЫЙ ШРИФТ «PRESS START 2P» (БЕСПЛАТНЫЙ, GOOGLE FONTS).
+</div>
+</body>
+</html>

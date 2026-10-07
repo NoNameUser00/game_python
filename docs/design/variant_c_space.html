@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Вариант C — «Орбита-7» (космос, неон)</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --neon:#4df3ff; --mag:#ff4df3; --gold:#ffe14d; --txt:#d8f6ff; --panel:#0a1226; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Orbitron',"Trebuchet MS",sans-serif;color:var(--txt);min-height:100vh;
+    background:
+      radial-gradient(1px 1px at 20% 30%,#fff 50%,transparent 51%),
+      radial-gradient(1px 1px at 70% 60%,#fff 50%,transparent 51%),
+      radial-gradient(2px 2px at 45% 80%,#9fe8ff 50%,transparent 51%),
+      radial-gradient(2px 2px at 85% 15%,#fff 50%,transparent 51%),
+      radial-gradient(1px 1px at 55% 25%,#fff 50%,transparent 51%),
+      radial-gradient(1px 1px at 10% 75%,#fff 50%,transparent 51%),
+      radial-gradient(circle at 70% 20%, #1b2b5e55, transparent 45%),
+      #04060f;
+    background-size:auto,auto,auto,auto,auto,auto,auto,auto;
+    padding-bottom:40px;
+  }
+  header{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding:16px 26px;
+    background:#0a1226ee;border-bottom:2px solid #4df3ff55;box-shadow:0 0 30px #4df3ff22}
+  .logo{font-size:18px;font-weight:800;color:var(--neon);text-shadow:0 0 12px var(--neon)}
+  .lvl{font-size:11px;border:1px solid var(--mag);color:var(--mag);padding:7px 14px;border-radius:4px;
+    box-shadow:0 0 12px #ff4df344 inset}
+  .xpwrap{flex:1;min-width:220px}
+  .xplabel{font-size:10px;letter-spacing:2px;color:#8fd7ff;margin-bottom:5px}
+  .xpbar{height:14px;background:#04060f;border:1px solid var(--neon);border-radius:999px;overflow:hidden;
+    box-shadow:0 0 10px #4df3ff55}
+  .xpfill{height:100%;width:42%;background:linear-gradient(90deg,var(--neon),var(--mag));
+    box-shadow:0 0 12px var(--neon)}
+  main{display:grid;grid-template-columns:1fr 320px;gap:22px;max-width:1150px;margin:24px auto;padding:0 20px}
+  .map{position:relative;height:460px;border-radius:16px;border:1px solid #4df3ff66;
+    background:radial-gradient(circle at 30% 70%, #12204a88, transparent 60%),#060a18;
+    box-shadow:0 0 40px #4df3ff22, inset 0 0 60px #000;overflow:hidden}
+  .map::before{content:"ОРБИТАЛЬНАЯ КАРТА · СЕКТОР 7";position:absolute;top:12px;left:16px;
+    font-size:9px;letter-spacing:3px;color:#5fb9d8}
+  .map svg{position:absolute;inset:0;width:100%;height:100%}
+  .node{position:absolute;transform:translate(-50%,-50%);text-align:center;cursor:pointer}
+  .planet{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:26px;border:2px solid #3a5f8f;background:radial-gradient(circle at 30% 30%,#28406e,#0d1830);
+    box-shadow:0 0 0 4px #04060f}
+  .node.done .planet{border-color:#5dd97f;box-shadow:0 0 0 4px #04060f,0 0 16px #5dd97f88}
+  .node.current .planet{border-color:var(--gold);
+    box-shadow:0 0 0 4px #04060f,0 0 30px var(--gold);animation:orbit 1.4s infinite alternate}
+  @keyframes orbit{to{box-shadow:0 0 0 4px #04060f,0 0 55px var(--gold)}}
+  .node.locked .planet{opacity:.55;filter:grayscale(.7)}
+  .cap{margin-top:7px;font-size:9px;letter-spacing:1px;color:#9fdcff;text-shadow:0 0 6px #4df3ff88;
+    white-space:nowrap}
+  .node.current .cap{color:var(--gold)}
+  .panel{background:linear-gradient(#0d1730,#081024);border:1px solid var(--neon);border-radius:14px;
+    padding:20px;box-shadow:0 0 25px #4df3ff33;height:fit-content}
+  .panel h2{font-size:15px;color:var(--neon);margin-bottom:8px;line-height:1.5}
+  .stars{color:var(--gold);font-size:16px;letter-spacing:4px;margin-bottom:10px}
+  .panel p{font-family:"Trebuchet MS",sans-serif;font-size:15px;line-height:1.6;color:#bfe6f7;margin-bottom:12px}
+  pre{font-family:ui-monospace,Consolas,monospace;font-size:14px;background:#04060f;
+    border:1px solid #2a4d77;border-radius:8px;padding:12px;color:#7dffb8;margin-bottom:16px}
+  .btn{display:block;width:100%;padding:14px;font-family:inherit;font-size:13px;font-weight:800;
+    letter-spacing:2px;color:#04060f;background:linear-gradient(90deg,var(--neon),#8ef7ff);
+    border:none;border-radius:8px;cursor:pointer;box-shadow:0 0 18px #4df3ff88}
+  .btn:active{transform:translateY(3px)}
+  .note{max-width:1150px;margin:16px auto 0;padding:0 20px;font-size:11px;letter-spacing:1px;color:#5fb9d8;line-height:2}
+  @media(max-width:900px){main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🚀 ОРБИТА-7</div>
+  <div class="lvl">БОРТ · УРОВЕНЬ 1</div>
+  <div class="xpwrap">
+    <div class="xplabel">ЭНЕРГИЯ 42 / 100</div>
+    <div class="xpbar"><div class="xpfill"></div></div>
+  </div>
+</header>
+
+<main>
+  <div class="map">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path d="M8,74 Q20,60 26,50 T44,70 Q54,50 60,44 T76,66 Q84,50 90,38"
+        fill="none" stroke="#4df3ff" stroke-width="2" stroke-dasharray="4 5"
+        vector-effect="non-scaling-stroke" opacity=".8"/>
+    </svg>
+    <div class="node done"    style="left:8%;top:74%"><div class="planet">🌕</div><div class="cap">СТАРТ</div></div>
+    <div class="node done"    style="left:26%;top:50%"><div class="planet">🌕</div><div class="cap">ГОТОВО</div></div>
+    <div class="node current" style="left:44%;top:70%"><div class="planet">🚀</div><div class="cap">ТЕКУЩАЯ МИССИЯ</div></div>
+    <div class="node locked"  style="left:60%;top:44%"><div class="planet">🪐</div><div class="cap">ЦИКЛЫ</div></div>
+    <div class="node locked"  style="left:76%;top:66%"><div class="planet">🪐</div><div class="cap">СПИСКИ</div></div>
+    <div class="node locked"  style="left:90%;top:38%"><div class="planet">🛸</div><div class="cap">ФИНАЛ</div></div>
+  </div>
+
+  <aside class="panel">
+    <h2>МИССИЯ 3 · ПРИВЕТСТВИЕ</h2>
+    <div class="stars">★★☆</div>
+    <p>Напиши функцию <b>hello(name)</b>, возвращающую «Привет, {name}!» — экипаж ждёт код!</p>
+    <pre>def hello(name):
+    pass</pre>
+    <button class="btn">▶ ЗАПУСТИТЬ ПРОВЕРКУ</button>
+  </aside>
+</main>
+
+<div class="note">Мокап вариента C · Космос и неон: планеты-уровни, корабль вместо «текущего узла», цифровой шрифт Orbitron (бесплатный).</div>
+</body>
+</html>

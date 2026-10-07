@@ -1,0 +1,74 @@
+slug: dicts
+title: Словари
+icon: "📖"
+order: 6
+lessons:
+  - slug: dict-basics
+    title: Словари в действии
+    order: 1
+    tasks:
+      - slug: word-count
+        title: Подсчёт слов
+        difficulty: 2
+        xp_reward: 25
+        function: word_count
+        prompt_md: |
+          ## Сколько раз встретилось слово 📊
+
+          Напиши функцию `word_count(words, word)`: она получает список слов
+          и одно слово — и возвращает, сколько раз оно встречается в списке.
+
+          **Примеры:**
+          - `word_count(["яблоко", "груша", "яблоко"], "яблоко")` → `2`
+          - `word_count(["а", "б"], "в")` → `0`
+          - `word_count([], "а")` → `0`
+        starter_code: |
+          def word_count(words, word):
+              # сколько раз word встречается в words?
+              pass
+        hints:
+          - "У списка есть метод count(word)"
+          - "Или цикл и счётчик: если words[i] == word, прибавляй 1"
+        tests:
+          - input: [["яблоко", "груша", "яблоко"], "яблоко"]
+            expected: 2
+          - input: [["а", "б"], "в"]
+            expected: 0
+          - input: [[], "а"]
+            expected: 0
+          - input: [["кот", "кот", "кот"], "кот"]
+            expected: 3
+
+      - slug: best-student
+        title: Лучший ученик
+        difficulty: 3
+        xp_reward: 30
+        function: best_student
+        prompt_md: |
+          ## Кто лучше всех? 🏅
+
+          Дан словарь: ключи — имена учеников, значения — баллы.
+          Напиши функцию `best_student(students)`, которая возвращает
+          **имя** ученика с наибольшим баллом.
+
+          **Примеры:**
+          - `best_student({"Аня": 5, "Боря": 3})` → `"Аня"`
+          - `best_student({"Маша": 2, "Дима": 7})` → `"Дима"`
+
+          > Подсказка: у словаря есть метод `items()`, а `max()` умеет сравнивать пары.
+        starter_code: |
+          def best_student(students):
+              # верни имя лучшего ученика
+              pass
+        hints:
+          - "Список пар: students.items() → [('Аня', 5), ('Боря', 3)]"
+          - "max(students.items(), key=lambda pair: pair[1]) вернёт пару с максимумом — возми pair[0]"
+        tests:
+          - input: [{"Аня": 5, "Боря": 3}]
+            expected: "Аня"
+          - input: [{"Маша": 2, "Дима": 7}]
+            expected: "Дима"
+          - input: [{"Один": 10}]
+            expected: "Один"
+          - input: [{"А": 1, "Б": 100, "В": 50}]
+            expected: "Б"

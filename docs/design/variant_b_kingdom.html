@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Вариант B — «Королевство Питонии» (яркая карта)</title>
+<style>
+  :root{
+    --grass:#58c04a; --grass2:#3ea335; --sky1:#8ed7ff; --sky2:#dff6ff;
+    --path:#e8b46a; --edge:#2e7d32; --gold:#ffb300; --txt:#23402a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Trebuchet MS",Verdana,system-ui,sans-serif;color:var(--txt);min-height:100vh;
+    background:linear-gradient(var(--sky1),var(--sky2) 55%,#bfe9a8 55%);
+  }
+  header{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:16px 26px;
+    background:#ffffffcc;box-shadow:0 4px 0 #00000015}
+  .logo{font-size:24px;font-weight:bold;color:#2e7d32}
+  .lvl{font-size:15px;background:#fff3c4;border:2px solid var(--gold);border-radius:999px;padding:6px 16px}
+  .xpwrap{flex:1;min-width:220px}
+  .xplabel{font-size:14px;color:#4b6b52;margin-bottom:4px}
+  .xpbar{height:20px;background:#fff;border:2px solid var(--edge);border-radius:999px;overflow:hidden}
+  .xpfill{height:100%;width:42%;background:linear-gradient(90deg,#ffd54f,var(--gold))}
+  main{display:grid;grid-template-columns:1fr 320px;gap:22px;max-width:1150px;margin:24px auto;padding:0 20px}
+  .map{position:relative;height:460px;border-radius:24px;overflow:hidden;
+    border:4px solid var(--edge);box-shadow:0 10px 0 #00000020;
+    background:
+      radial-gradient(circle at 80% 15%, #fff9 0 40px, transparent 41px),
+      radial-gradient(circle at 12% 25%, #fffb 0 30px, transparent 31px),
+      linear-gradient(#7cd0ff 0 38%, var(--grass) 38% 100%);}
+  .hills{position:absolute;left:-10%;right:-10%;bottom:-70px;height:180px;background:var(--grass2);
+    border-radius:50% 50% 0 0}
+  .map svg.trail{position:absolute;inset:0;width:100%;height:100%}
+  .node{position:absolute;transform:translate(-50%,-50%);text-align:center;cursor:pointer;user-select:none}
+  .badge{
+    width:58px;height:58px;border-radius:50%;background:#fff;border:4px solid var(--edge);
+    display:flex;align-items:center;justify-content:center;font-size:26px;
+    box-shadow:0 5px 0 #00000030;
+  }
+  .node.done .badge{background:#e9fbe7}
+  .node.current .badge{border-color:var(--gold);background:#fff8e1;
+    box-shadow:0 0 0 6px #ffb30055,0 5px 0 #00000030;animation:hop 1s infinite alternate}
+  @keyframes hop{to{transform:translateY(-7px)}}
+  .node.locked .badge{filter:grayscale(1);opacity:.75}
+  .cap{margin-top:6px;font-size:13px;font-weight:bold;background:#ffffffd9;border-radius:999px;
+    padding:2px 10px;box-shadow:0 2px 0 #00000020;white-space:nowrap}
+  .panel{background:#fff;border:4px solid var(--edge);border-radius:24px;padding:20px;
+    box-shadow:0 10px 0 #00000020;height:fit-content}
+  .panel h2{font-size:20px;color:#2e7d32;margin-bottom:8px}
+  .stars{color:var(--gold);font-size:20px;letter-spacing:4px;margin-bottom:10px}
+  .panel p{font-size:15px;line-height:1.6;color:#3f5f47;margin-bottom:12px}
+  pre{font-family:ui-monospace,Consolas,monospace;font-size:14px;background:#f4fff2;
+    border:2px dashed #8bc98a;border-radius:12px;padding:12px;color:#1b5e20;margin-bottom:16px}
+  .btn{display:block;width:100%;padding:14px;font-family:inherit;font-size:17px;font-weight:bold;
+    color:#fff;background:linear-gradient(#66d95a,var(--grass2));border:none;border-radius:999px;
+    cursor:pointer;box-shadow:0 5px 0 #256b21}
+  .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #256b21}
+  .note{max-width:1150px;margin:16px auto 0;padding:0 20px;font-size:13px;color:#4b6b52}
+  @media(max-width:900px){main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🐍 Королевство Питонии</div>
+  <div class="lvl">⭐ Уровень 1</div>
+  <div class="xpwrap">
+    <div class="xplabel">Опыт: 42 / 100</div>
+    <div class="xpbar"><div class="xpfill"></div></div>
+  </div>
+</header>
+
+<main>
+  <div class="map">
+    <div class="hills"></div>
+    <svg class="trail" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path d="M8,74 Q17,52 26,52 T44,70 Q52,44 60,44 T76,66 Q83,40 90,40"
+        fill="none" stroke="#e8b46a" stroke-width="7" stroke-linecap="round"
+        stroke-dasharray="1 10" vector-effect="non-scaling-stroke"/>
+      <path d="M8,74 Q17,52 26,52 T44,70"
+        fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="6 6"
+        vector-effect="non-scaling-stroke" opacity=".9"/>
+    </svg>
+    <div class="node done"    style="left:8%;top:74%"><div class="badge">⭐</div><div class="cap">✓ Приветствие</div></div>
+    <div class="node done"    style="left:26%;top:52%"><div class="badge">⭐</div><div class="cap">✓ Сумма чисел</div></div>
+    <div class="node current" style="left:44%;top:70%"><div class="badge">🚩</div><div class="cap">Чётное или нет?</div></div>
+    <div class="node locked"  style="left:60%;top:44%"><div class="badge">🔒</div><div class="cap">Циклы</div></div>
+    <div class="node locked"  style="left:76%;top:66%"><div class="badge">🔒</div><div class="cap">Списки</div></div>
+    <div class="node locked"  style="left:90%;top:40%"><div class="badge">🏰</div><div class="cap">Башня</div></div>
+  </div>
+
+  <aside class="panel">
+    <h2>Уровень 3 · Чётное или нет?</h2>
+    <div class="stars">★★☆</div>
+    <p>Напиши функцию <b>is_even(n)</b>: она возвращает <b>True</b>, если число чётное, иначе <b>False</b>.</p>
+    <pre>def is_even(n):
+    pass</pre>
+    <button class="btn">▶ Проверить</button>
+  </aside>
+</main>
+
+<div class="note">Мокап варианта B · Яркий «сверху-вниз»: тропа с флагами, звёзды за решённое, замок в конце — в духе CheckiO/Duolingo.</div>
+</body>
+</html>

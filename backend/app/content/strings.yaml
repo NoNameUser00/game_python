@@ -1,0 +1,72 @@
+slug: strings
+title: Строки
+icon: "🔤"
+order: 5
+lessons:
+  - slug: string-ops
+    title: Операции со строками
+    order: 1
+    tasks:
+      - slug: reverse-string
+        title: Реверс строки
+        difficulty: 2
+        xp_reward: 25
+        function: reverse_string
+        prompt_md: |
+          ## Наоборот 🔁
+
+          Напиши функцию `reverse_string(s)`, которая возвращает строку `s`
+          задом наперёд.
+
+          **Примеры:**
+          - `reverse_string("python")` → `"nohtyp"`
+          - `reverse_string("123")` → `"321"`
+          - `reverse_string("")` → `""`
+        starter_code: |
+          def reverse_string(s):
+              # переверни строку
+              pass
+        hints:
+          - "В Python есть срез с отрицательным шагом: s[::-1]"
+          - "Можно и циклом: собирай символы с конца в новую строку"
+        tests:
+          - input: ["python"]
+            expected: "nohtyp"
+          - input: ["123"]
+            expected: "321"
+          - input: [""]
+            expected: ""
+          - input: ["код"]
+            expected: "док"
+
+      - slug: count-vowels
+        title: Сколько гласных
+        difficulty: 3
+        xp_reward: 30
+        function: count_vowels
+        prompt_md: |
+          ## Гласные 🔊
+
+          Напиши функцию `count_vowels(s)`, которая считает, сколько гласных
+          букв в строке. Гласные: `а е ё и о у ы э ю я` (в обоих регистрах).
+
+          **Примеры:**
+          - `count_vowels("привет")` → `2` (и, е)
+          - `count_vowels("Абракадабра")` → `4`
+          - `count_vowels("xyz")` → `0`
+        starter_code: |
+          def count_vowels(s):
+              # посчитай гласные
+              pass
+        hints:
+          - "Заведи строку vowels = 'аеёиоуыэюя' и проверяй, есть ли буква в ней"
+          - "Не забудь привести букву к нижнему регистру: ch.lower()"
+        tests:
+          - input: ["привет"]
+            expected: 2
+          - input: ["Абракадабра"]
+            expected: 4
+          - input: ["xyz"]
+            expected: 0
+          - input: ["АЕЁ"]
+            expected: 3
