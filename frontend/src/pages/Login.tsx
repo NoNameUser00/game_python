@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { login, setToken } from '../api/client'
 import { APP_NAME } from '../constants'
 
 export default function Login() {
   const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const resetOk = params.get('reset') === 'ok'
   const [loginIdent, setLoginIdent] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -59,6 +61,11 @@ export default function Login() {
             />
           </label>
 
+          <p className="forgot-link">
+            <Link to="/forgot-password">Забыли пароль? 🔑</Link>
+          </p>
+
+          {resetOk && <div className="form-ok">✅ Пароль изменён — войди с новым!</div>}
           {error && <div className="form-error">⚠️ {error}</div>}
 
           <button className="btn btn-primary btn-block" type="submit" disabled={busy}>

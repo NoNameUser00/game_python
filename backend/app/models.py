@@ -8,12 +8,21 @@ def utcnow() -> datetime:
 
 
 class User(SQLModel, table=True):
+    """Пользователь. Поля id/email/hashed_password/is_* — формат fastapi-users.
+
+    Учитель регистрируется по реальному email; ученик — по коду класса,
+    для него создаётся синтетический email (приватность, но fastapi-users
+    работает только с email — он обязателен и уникален).
+    """
     __tablename__ = "users"
     id: int | None = Field(default=None, primary_key=True)
-    # Учитель — регистрируется по email; ученик — по коду класса (email не нужен)
-    email: str | None = Field(default=None, index=True, unique=True)
+    email: str = Field(index=True, unique=True)
+    hashed_password: str
+    is_active: bool = Field(True, nullable=False)
+    is_superuser: bool = Field(False, nullable=False)
+    is_verified: bool = Field(False, nullable=False)  # верификация почты (вкл. на сервере)
+    # --- наше ---
     username: str
-    password_hash: str
     role: str = "pupil"                     # teacher | pupil
     class_id: int | None = Field(default=None, index=True, foreign_key="classes.id")
     xp: int = 0

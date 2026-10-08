@@ -27,7 +27,8 @@ def session_scope():
 
 
 def _needs_users_migration() -> bool:
-    """Локальная БД старой схемы (email NOT NULL) несовместима с регистрацией по коду."""
+    """Локальная БД старой схемы несовместима (было password_hash/email NULL,
+    стало поля fastapi-users) — пересоздаём. Прод-БД создаётся сразу новой."""
     if not DATABASE_URL.startswith("sqlite"):
         return False
     from sqlalchemy import text
@@ -36,9 +37,10 @@ def _needs_users_migration() -> bool:
         rows = conn.execute(text("PRAGMA table_info(users)")).fetchall()
     if not rows:
         return False
-    # row: (cid, name, type, notnull, dflt, pk)
-    email_col = next((r for r in rows if r[1] == "email"), None)
-    return email_col is not None and int(email_col[3]) != 0
+    required = {"email", "hashed_password", "is_verified", "username",
+                "role", "class_id", "xp"}
+    present = {r[1] for r in rows}
+    return not required.issubset(present)
 
 
 def init_db() -> None:

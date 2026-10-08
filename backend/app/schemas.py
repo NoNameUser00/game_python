@@ -61,7 +61,8 @@ def level_for(xp: int) -> int:
 def user_out(user, class_name: str | None = None) -> UserOut:
     return UserOut(
         id=user.id,
-        email=user.email,
+        # у учеников email синтетический (fastapi-users) — наружу не показываем
+        email=user.email if user.role == "teacher" else None,
         username=user.username,
         xp=user.xp,
         level=level_for(user.xp),

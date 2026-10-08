@@ -143,7 +143,21 @@ export function clearToken(): void {
 function extractDetail(data: unknown): string | null {
   if (!data || typeof data !== 'object') return null
   const detail = (data as { detail?: unknown }).detail
-  if (typeof detail === 'string') return detail
+  // Коды ошибок fastapi-users → человеческий русский
+  const RU: Record<string, string> = {
+    RESET_PASSWORD_BAD_TOKEN: 'Ссылка недействительна или уже устарела 😕',
+    RESET_PASSWORD_INVALID_PASSWORD: 'Пароль не подходит — попробуй другой',
+    VERIFY_USER_BAD_TOKEN: 'Ссылка недействительна или уже устарела 😕',
+    VERIFY_USER_ALREADY_VERIFIED: 'Почта уже подтверждена ✅',
+    LOGIN_BAD_CREDENTIALS: 'Неверный email/имя или пароль',
+  }
+  if (typeof detail === 'string') return RU[detail] ?? detail
+  if (detail && typeof detail === 'object' && 'code' in detail) {
+    const code = String((detail as { code?: unknown }).code)
+    const reason = (detail as { reason?: unknown }).reason
+    const base = RU[code] ?? code
+    return typeof reason === 'string' ? `${base} (${reason})` : base
+  }
   // FastAPI 422: detail — массив ошибок валидации
   if (Array.isArray(detail)) {
     const msgs = detail
@@ -244,6 +258,32 @@ export async function createClass(name: string): Promise<SchoolClass> {
 
 export async function getClasses(): Promise<SchoolClass[]> {
   return request<SchoolClass[]>('/classes')
+}
+
+/* ---------- fastapi-users: сброс пароля и подтверждение почты ---------- */
+
+/** «Забыли пароль» — письмо со ссылкой (dev: лежит в outbox-файле бэкенда). */
+export async function forgotPassword(email: string): Promise<void> {
+  await request<unknown>('/auth/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  })
+}
+
+/** Новый пароль по токену из ссылки письма. */
+export async function resetPassword(token: string, password: string): Promise<void> {
+  await request<unknown>('/auth/reset-password', {
+    method: 'POST',
+    body: JSON.stringify({ token, password }),
+  })
+}
+
+/** Подтверждение почты по токену из ссылки письма. */
+export async function verifyEmail(token: string): Promise<{ is_verified?: boolean }> {
+  return request<{ is_verified?: boolean }>('/auth/verify', {
+    method: 'POST',
+    body: JSON.stringify({ token }),
+  })
 }
 
 export async function getClassStudents(id: number): Promise<ClassDetail> {

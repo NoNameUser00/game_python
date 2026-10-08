@@ -8,6 +8,11 @@ if _TEST_DB.exists():
     _TEST_DB.unlink()
 os.environ["DATABASE_URL"] = f"sqlite:///{_TEST_DB}"
 os.environ["JWT_SECRET"] = "test-secret"
+# Письма fastapi-users (сброс пароля / верификация) — в свой outbox-файл
+_OUTBOX = Path(tempfile.gettempdir()) / "game_python_outbox_test.log"
+if _OUTBOX.exists():
+    _OUTBOX.unlink()
+os.environ["EMAIL_OUTBOX"] = str(_OUTBOX)
 
 import pytest
 from fastapi.testclient import TestClient

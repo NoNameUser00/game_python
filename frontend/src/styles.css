@@ -1030,3 +1030,12 @@ a {
 .student-pos { font-weight: 700; color: #8a80c0; min-width: 34px; }
 .student-name { flex: 1; font-weight: 600; }
 .student-stat { color: #5f5890; font-size: 14px; }
+
+/* ============ Сброс пароля / подтверждение почты ============ */
+.forgot-link { text-align: right; margin: -4px 0 6px; font-size: 14px; }
+.forgot-link a { color: #7c76a8; text-decoration: none; }
+.forgot-link a:hover { text-decoration: underline; color: #5a52a0; }
+.form-ok {
+  padding: 10px 14px; border-radius: 10px; font-size: 15px; font-weight: 600;
+  background: #eafaf0; border: 1px solid #9be0b8; color: #1c7a45;
+}
