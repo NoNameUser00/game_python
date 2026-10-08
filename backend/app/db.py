@@ -1,6 +1,7 @@
 """БД: движок, сессии, инициализация и загрузка контента."""
 from contextlib import contextmanager
 
+from sqlalchemy import text
 from sqlmodel import Session, SQLModel, create_engine, select
 
 from .config import DATABASE_URL
@@ -31,7 +32,6 @@ def _needs_users_migration() -> bool:
     стало поля fastapi-users) — пересоздаём. Прод-БД создаётся сразу новой."""
     if not DATABASE_URL.startswith("sqlite"):
         return False
-    from sqlalchemy import text
 
     with engine.connect() as conn:
         rows = conn.execute(text("PRAGMA table_info(users)")).fetchall()
@@ -43,13 +43,35 @@ def _needs_users_migration() -> bool:
     return not required.issubset(present)
 
 
-def init_db() -> None:
+# Ключ session-level advisory lock: схему на свежей БД создаёт только один
+# воркер/процесс, остальные ждут и увидят готовую схему.
+_INIT_LOCK_KEY = 764_321
+
+
+def init_db():
     if _needs_users_migration():
         # Dev-БД пересоздаётся (данные — тестовые; контент загрузится заново из YAML)
         SQLModel.metadata.drop_all(engine)
+
+    if not DATABASE_URL.startswith("sqlite"):
+        # PostgreSQL: несколько воркеров стартуют одновременно, а create_all
+        # на гонке падает с UniqueViolation (duplicate key ..._id_seq).
+        # Advisory lock снимаем на одном соединении и держим через весь init.
+        with engine.connect() as conn:
+            conn.execute(text("SELECT pg_advisory_lock(:k)"), {"k": _INIT_LOCK_KEY})
+            try:
+                SQLModel.metadata.create_all(bind=conn)
+                with Session(conn) as session:
+                    stats = load_content(session)
+                conn.commit()
+            finally:
+                conn.execute(text("SELECT pg_advisory_unlock(:k)"), {"k": _INIT_LOCK_KEY})
+                conn.commit()
+        return stats
+
     SQLModel.metadata.create_all(engine)
     with Session(engine) as session:
-        load_content(session)
+        return load_content(session)
 
 
 def get_user_or_none(session: Session, user_id: int) -> models.User | None:

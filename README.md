@@ -1,3 +1,13 @@
+---
+title: Подземелья Python
+emoji: 🐍
+colorFrom: yellow
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # 🐍 Подземелья Python — обучающая игра
 
 Онлайн-игра для школьников: изучаем Python, алгоритмы и программирование

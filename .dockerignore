@@ -1,0 +1,14 @@
+# Контекст сборки контейнеров (Dockerfile в корне — для HF Spaces)
+.git
+**/node_modules
+**/__pycache__
+**/*.pyc
+frontend/dist
+backend/.venv
+backend/game.db
+backend/outbox.log
+docs
+scripts
+*.md
+.env
+.env.*
