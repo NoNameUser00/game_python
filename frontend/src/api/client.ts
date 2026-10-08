@@ -1,4 +1,4 @@
-// Обёртка над fetch для API «Питонята».
+// Обёртка над fetch для API «Подземелье Питона».
 // Базовый путь /api, авторизация Bearer-токеном из localStorage, ошибки {detail}.
 
 export const TOKEN_KEY = 'token'

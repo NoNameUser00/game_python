@@ -10,7 +10,7 @@ from .users import UserRead, fastapi_users
 
 logger = logging.getLogger("game_python")
 
-app = FastAPI(title="Питонята — обучающая игра", version="0.1.0")
+app = FastAPI(title="Подземелье Питона — обучающая игра", version="0.1.0")
 
 # В разработке фронтенд хостится на другом порту (Vite) — разрешаем CORS.
 app.add_middleware(

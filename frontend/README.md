@@ -1,4 +1,4 @@
-# 🐍 Питонята — обучающая игра «Изучай Python»
+# 🐍 Подземелье Питона — обучающая игра «Изучай Python»
 
 Фронтенд SPA для школьников: карта тем, задачи с автопроверкой, подсказки, XP и уровни.
 
@@ -26,7 +26,7 @@ npm run build    # сборка в dist/ (tsc -b && vite build)
 src/
   api/client.ts        # обёртка над fetch: /api, Bearer-токен, 401 → /login, {detail}
   auth.tsx             # контекст пользователя (me/logout)
-  constants.ts         # APP_NAME = «Питонята», XP_PER_LEVEL
+  constants.ts         # APP_NAME = «Подземелье Питона», XP_PER_LEVEL
   components/          # Layout (шапка), ProtectedRoute, XPBar, Stars
   pages/               # Login, Register, MapPage, TaskPage, ProfilePage
   theme.ts             # тема Dracula для CodeMirror
