@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Шрифты — Подземелье Питона</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Варианты дисплейных шрифтов -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@500;700&family=Rubik+Mono+One&family=Handjet:wght@600;800&family=Ruslan+Display&family=Comfortaa:wght@700&family=Nunito:wght@400;700;800&family=Onest:wght@400;700;900&family=Golos+Text:wght@400;700&family=Rubik:wght@400;700;900&family=Fira+Code&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --stone:#241d33; --stone2:#171225; --edge:#4a3d6b; --gold:#ffcc4d;
+    --torch:#ff9d2e; --ok:#5dd97f; --lock:#5a5170; --txt:#e8e2ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    color:var(--txt); min-height:100vh; padding:36px 20px 60px;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,157,46,.10), transparent 30%),
+      radial-gradient(circle at 85% 70%, rgba(255,157,46,.07), transparent 30%),
+      repeating-linear-gradient(0deg, #14101f 0 38px, #171326 38px 40px),
+      #14101f;
+    font-family:'Nunito',sans-serif;
+  }
+  h0 { display:block; font-size:26px; margin-bottom:6px; color:var(--gold); font-weight:800; }
+  .page-head { max-width:980px; margin:0 auto 30px; }
+  .page-head p { color:#b9b1e0; margin-top:6px; }
+  .variant {
+    max-width:980px; margin:0 auto 28px;
+    background:var(--stone2); border:2px solid var(--edge); border-radius:16px;
+    overflow:hidden;
+  }
+  .v-head {
+    display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+    padding:12px 20px; background:var(--stone); border-bottom:2px solid var(--edge);
+  }
+  .v-num { color:var(--gold); font-weight:800; font-size:14px; letter-spacing:1px; }
+  .v-name { font-weight:800; font-size:17px; }
+  .v-note { color:#9d94c8; font-size:13px; }
+  .v-body { padding:24px 26px; }
+
+  /* макет «мини-страницы игры» внутри каждого варианта */
+  .demo-title { font-size:30px; line-height:1.25; margin-bottom:6px; }
+  .demo-sub { font-size:15px; color:#c7bff0; margin-bottom:16px; }
+  .demo-btns { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+  .demo-btn {
+    display:inline-block; padding:11px 20px; border-radius:12px;
+    background:linear-gradient(180deg,#ffcc4d,#f0a91f); color:#3a2a00;
+    font-weight:800; font-size:15px; border:2px solid #ffe08a;
+    text-shadow:none;
+  }
+  .demo-btn.ghost { background:transparent; color:var(--gold); border-color:var(--gold); }
+  .demo-card {
+    background:var(--stone); border:2px solid var(--edge); border-radius:12px;
+    padding:16px 18px; margin-bottom:14px;
+  }
+  .demo-card h4 { font-size:17px; margin-bottom:8px; color:var(--gold); }
+  .demo-card p { font-size:15px; line-height:1.6; }
+  .demo-code {
+    background:#0d0a17; border:1px solid var(--edge); border-radius:10px;
+    padding:14px 16px; font-size:14.5px; line-height:1.7; color:#a8e6a3;
+    overflow-x:auto;
+  }
+  .demo-code .kw { color:#ff9d2e; } .demo-code .st { color:#ffcc4d; }
+  .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .tag { font-size:12.5px; padding:4px 11px; border-radius:999px;
+    background:#241d33; border:1px solid var(--edge); color:#c7bff0; }
+
+  /* ---- шрифтовые роли для каждого варианта ---- */
+  .f1 .demo-title, .f1 .v-name { font-family:'Press Start 2P',monospace; font-size:24px; line-height:1.5; }
+  .f1 .demo-card h4, .f1 .demo-btn { font-family:'Press Start 2P',monospace; font-size:12px; }
+  .f1 { font-family:'Nunito',sans-serif; }
+
+  .f2 .demo-title, .f2 .v-name { font-family:'Pixelify Sans',monospace; font-size:34px; font-weight:700; }
+  .f2 .demo-card h4 { font-family:'Pixelify Sans',monospace; font-size:20px; font-weight:700; }
+  .f2 { font-family:'Onest',sans-serif; }
+
+  .f3 .demo-title, .f3 .v-name { font-family:'Rubik Mono One',sans-serif; font-size:26px; }
+  .f3 .demo-card h4 { font-family:'Rubik Mono One',sans-serif; font-size:17px; font-weight:400; }
+  .f3 { font-family:'Rubik',sans-serif; }
+
+  .f4 .demo-title, .f4 .v-name { font-family:'Handjet',monospace; font-size:40px; font-weight:800; letter-spacing:1px; }
+  .f4 .demo-card h4 { font-family:'Handjet',monospace; font-size:26px; font-weight:800; }
+  .f4 { font-family:'Golos Text',sans-serif; }
+
+  .f5 .demo-title, .f5 .v-name { font-family:'Ruslan Display',serif; font-size:32px; }
+  .f5 .demo-card h4 { font-family:'Ruslan Display',serif; font-size:22px; font-weight:400; }
+  .f5 { font-family:'Comfortaa',sans-serif; }
+
+  .f6 .demo-title, .f6 .v-name { font-family:'Comfortaa',cursive; font-size:30px; font-weight:700; }
+  .f6 .demo-card h4 { font-family:'Comfortaa',cursive; font-size:19px; font-weight:700; }
+  .f6 { font-family:'Nunito',sans-serif; }
+
+  .code-fira { font-family:'Fira Code',monospace; }
+  .code-jet { font-family:'JetBrains Mono',monospace; }
+</style>
+</head>
+<body>
+  <div class="page-head">
+    <h0>🔤 Шрифты для «Подземелья Питона»</h0>
+    <p>Палитра — как в варианте A (вы нравятся цвета). Внутри каждого блока мини-макет страницы игры.
+    Все шрифты проверены на кириллицу (耪cmap). Слева направо: дисплейный (заголовки) + текстовый.</p>
+  </div>
+
+  <!-- 1 -->
+  <section class="variant f1">
+    <div class="v-head">
+      <span class="v-num">ВАРИАНТ 1</span>
+      <span class="v-name">Press Start 2P + Nunito</span>
+      <span class="v-note">8-битный ретро, как в мокапе A. Пиксельный текст — атмосфера аркады, но русский мелкий текст читается трудно</span>
+    </div>
+    <div class="v-body">
+      <div class="demo-title">Подземелье Питона</div>
+      <div class="demo-sub">Пройди все уровни и стань мастером кода</div>
+      <div class="demo-btns">
+        <span class="demo-btn">▶ Начать игру</span>
+        <span class="demo-btn ghost">💡 Подсказка</span>
+      </div>
+      <div class="demo-card">
+        <h4>Задача: Приветствие</h4>
+        <p>Напиши функцию hello(name), которая возвращает «Привет, Мир!» — дружи с переменными, они живут в подземелье.</p>
+        <div class="demo-code code-fira"><span class="kw">def</span> hello(name):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="st">f"Привет, {name}!"</span></div>
+      </div>
+      <div class="tags">
+        <span class="tag">Заголовки: Press Start 2P (пиксель)</span>
+        <span class="tag">Текст: Nunito (круглый, детский)</span>
+        <span class="tag">Код: Fira Code</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="variant f2">
+    <div class="v-head">
+      <span class="v-num">ВАРИАНТ 2</span>
+      <span class="v-name">Pixelify Sans + Onest</span>
+      <span class="v-note">Пиксельная атмосфера, но дисплейный шрифт читается (в отличие от Press Start 2P) — компромисс «ретро и понятно»</span>
+    </div>
+    <div class="v-body">
+      <div class="demo-title">Подземелье Питона</div>
+      <div class="demo-sub">Пройди все уровни и стань мастером кода</div>
+      <div class="demo-btns">
+        <span class="demo-btn">▶ Начать игру</span>
+        <span class="demo-btn ghost">💡 Подсказка</span>
+      </div>
+      <div class="demo-card">
+        <h4>Задача: Приветствие</h4>
+        <p>Напиши функцию hello(name), которая возвращает «Привет, Мир!» — дружи с переменными, они живут в подземелье.</p>
+        <div class="demo-code code-fira"><span class="kw">def</span> hello(name):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="st">f"Привет, {name}!"</span></div>
+      </div>
+      <div class="tags">
+        <span class="tag">Заголовки: Pixelify Sans (пиксель + читаемость)</span>
+        <span class="tag">Текст: Onest (нейтральный, русский)</span>
+        <span class="tag">Код: Fira Code</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="variant f3">
+    <div class="v-head">
+      <span class="v-num">ВАРИАНТ 3</span>
+      <span class="v-name">Rubik Mono One + Rubik</span>
+      <span class="v-note">Жирный геометричный заголовок «как сундук с сокровищами» + одинаков по духу текст. Без пикселей, зато очень чётко</span>
+    </div>
+    <div class="v-body">
+      <div class="demo-title">Подземелье Питона</div>
+      <div class="demo-sub">Пройди все уровни и стань мастером кода</div>
+      <div class="demo-btns">
+        <span class="demo-btn">▶ Начать игру</span>
+        <span class="demo-btn ghost">💡 Подсказка</span>
+      </div>
+      <div class="demo-card">
+        <h4>Задача: Приветствие</h4>
+        <p>Напиши функцию hello(name), которая возвращает «Привет, Мир!» — дружи с переменными, они живут в подземелье.</p>
+        <div class="demo-code code-jet"><span class="kw">def</span> hello(name):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="st">f"Привет, {name}!"</span></div>
+      </div>
+      <div class="tags">
+        <span class="tag">Заголовки: Rubik Mono One (тяжёлый, «каменный»)</span>
+        <span class="tag">Текст: Rubik (тот же характер, лёгкие скругления)</span>
+        <span class="tag">Код: JetBrains Mono</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="variant f4">
+    <div class="v-head">
+      <span class="v-num">ВАРИАНТ 4</span>
+      <span class="v-name">Handjet + Golos Text</span>
+      <span class="v-note">Handjet — «светодиодный» дисплейный шрифт (матрица), отлично смотрится на тёмном камне; текст — чистый русский Golos</span>
+    </div>
+    <div class="v-body">
+      <div class="demo-title">Подземелье Питона</div>
+      <div class="demo-sub">Пройди все уровни и стань мастером кода</div>
+      <div class="demo-btns">
+        <span class="demo-btn">▶ Начать игру</span>
+        <span class="demo-btn ghost">💡 Подсказка</span>
+      </div>
+      <div class="demo-card">
+        <h4>Задача: Приветствие</h4>
+        <p>Напиши функцию hello(name), которая возвращает «Привет, Мир!» — дружи с переменными, они живут в подземелье.</p>
+        <div class="demo-code code-fira"><span class="kw">def</span> hello(name):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="st">f"Привет, {name}!"</span></div>
+      </div>
+      <div class="tags">
+        <span class="tag">Заголовки: Handjet (LED/матрица)</span>
+        <span class="tag">Текст: Golos Text (русский, нейтральный)</span>
+        <span class="tag">Код: Fira Code</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="variant f5">
+    <div class="v-head">
+      <span class="v-num">ВАРИАНТ 5</span>
+      <span class="v-name">Ruslan Display + Comfortaa</span>
+      <span class="v-note">Славянский декоративный заголовок — «древнее подземелье» с русским колоритом; текст круглый Comfortaa</span>
+    </div>
+    <div class="v-body">
+      <div class="demo-title">Подземелье Питона</div>
+      <div class="demo-sub">Пройди все уровни и стань мастером кода</div>
+      <div class="demo-btns">
+        <span class="demo-btn">▶ Начать игру</span>
+        <span class="demo-btn ghost">💡 Подсказка</span>
+      </div>
+      <div class="demo-card">
+        <h4>Задача: Приветствие</h4>
+        <p>Напиши функцию hello(name), которая возвращает «Привет, Мир!» — дружи с переменными, они живут в подземелье.</p>
+        <div class="demo-code code-jet"><span class="kw">def</span> hello(name):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="st">f"Привет, {name}!"</span></div>
+      </div>
+      <div class="tags">
+        <span class="tag">Заголовки: Ruslan Display (славянский орнамент)</span>
+        <span class="tag">Текст: Comfortaa (круглый, дружелюбный)</span>
+        <span class="tag">Код: JetBrains Mono</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="variant f6">
+    <div class="v-head">
+      <span class="v-num">ВАРИАНТ 6</span>
+      <span class="v-name">Comfortaa + Nunito (без пикселей)</span>
+      <span class="v-note">Самый «спокойный и детский»: только скруглённые шрифты, минимум игры, максимум уюта</span>
+    </div>
+    <div class="v-body">
+      <div class="demo-title">Подземелье Питона</div>
+      <div class="demo-sub">Пройди все уровни и стань мастером кода</div>
+      <div class="demo-btns">
+        <span class="demo-btn">▶ Начать игру</span>
+        <span class="demo-btn ghost">💡 Подсказка</span>
+      </div>
+      <div class="demo-card">
+        <h4>Задача: Приветствие</h4>
+        <p>Напиши функцию hello(name), которая возвращает «Привет, Мир!» — дружи с переменными, они живут в подземелье.</p>
+        <div class="demo-code code-fira"><span class="kw">def</span> hello(name):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="st">f"Привет, {name}!"</span></div>
+      </div>
+      <div class="tags">
+        <span class="tag">Заголовки: Comfortaa (круглый)</span>
+        <span class="tag">Текст: Nunito (мягкий)</span>
+        <span class="tag">Код: Fira Code</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-head" style="margin-top:26px;color:#9d94c8;font-size:14px">
+    💡 Можно смешивать: например «вариант 2» для заголовков + текст из «варианта 3».
+    Шрифты подключим через npm-пакеты (офлайн-режим, №12) — без google-шлюза на сервере.
+  </div>
+</body>
+</html>
