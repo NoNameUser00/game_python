@@ -70,7 +70,7 @@ export default function ForgotPassword() {
           <Link to="/login">← Вспомнил пароль? Войти</Link>
         </p>
         <p className="auth-switch">
-          <Link to="/">На главную {APP_NAME}</Link>
+          <Link to="/">На главную — {APP_NAME}</Link>
         </p>
       </div>
     </div>

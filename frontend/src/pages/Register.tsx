@@ -67,7 +67,7 @@ export default function Register() {
       <div className="auth-card">
         <div className="auth-logo">🎉</div>
         <h1 className="auth-title">Новый питонёнок</h1>
-        <p className="auth-subtitle">Создай аккаунт в {APP_NAME} и начни приключение!</p>
+        <p className="auth-subtitle">Создай аккаунт в игре {APP_NAME} и начни приключение!</p>
 
         <div className="auth-tabs" role="tablist">
           <button

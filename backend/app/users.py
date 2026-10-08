@@ -24,7 +24,7 @@ from .models import User
 
 logger = logging.getLogger("app.users")
 
-APP_TITLE = "Подземелье Питона"
+APP_TITLE = "Подземелья Python"
 
 
 class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
