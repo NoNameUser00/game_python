@@ -2,7 +2,7 @@
    Подземелье Питона — стиль «Крипт Кодов» (один файл CSS)
    Палитра и приёмы — по мокапу docs/design/variant_a_dungeon.html:
    тёмный камень, золото и факелы, жёсткие нижние тени (блоки).
-   Шрифты: Pixelify Sans (заголовки, пиксель) + Onest (текст),
+   Шрифты: Caveat (заголовки, рукописный «дневник искателя») + Onest (текст),
    Fira Code (код) — все локально через @fontsource, работают офлайн.
    ========================================================= */
 
@@ -71,13 +71,14 @@ button {
 h1,
 h2,
 h3,
+h4,
 .auth-title,
 .brand-name,
 .task-title,
 .stat-value {
-  font-family: 'Pixelify Sans', 'Onest', system-ui, sans-serif;
+  font-family: 'Caveat', 'Onest', system-ui, cursive;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0;
 }
 
 h1,
@@ -126,10 +127,10 @@ a {
 }
 
 .brand-name {
-  font-size: 26px;
+  font-size: 36px;
   font-weight: 800;
   color: var(--gold);
-  text-shadow: 3px 3px 0 #5a3b00;
+  text-shadow: 2px 2px 0 #5a3b00;
 }
 
 .app-nav {
@@ -340,9 +341,9 @@ a {
 
 .auth-title {
   margin: 6px 0 4px;
-  font-size: 32px;
+  font-size: 46px;
   color: var(--gold);
-  text-shadow: 3px 3px 0 #5a3b00;
+  text-shadow: 2px 2px 0 #5a3b00;
 }
 
 .auth-subtitle {
@@ -455,7 +456,7 @@ a {
 
 .greeting-text h1 {
   margin: 0 0 6px;
-  font-size: 30px;
+  font-size: 42px;
 }
 
 .greeting-text p {
@@ -510,7 +511,7 @@ a {
 
 .topic-title {
   margin: 0;
-  font-size: 24px;
+  font-size: 34px;
 }
 
 .topic-slug {
@@ -631,7 +632,7 @@ a {
 
 .task-title {
   margin: 0;
-  font-size: 27px;
+  font-size: 38px;
 }
 
 .task-meta {
@@ -677,13 +678,13 @@ a {
 }
 
 .prompt-md h1 {
-  font-size: 24px;
+  font-size: 30px;
 }
 .prompt-md h2 {
-  font-size: 22px;
+  font-size: 27px;
 }
 .prompt-md h3 {
-  font-size: 19px;
+  font-size: 24px;
 }
 
 .prompt-md p {
@@ -954,7 +955,7 @@ a {
 
 .profile-info h1 {
   margin: 0 0 4px;
-  font-size: 28px;
+  font-size: 40px;
 }
 
 .profile-email {
@@ -992,7 +993,7 @@ a {
 }
 
 .stat-value {
-  font-size: 40px;
+  font-size: 50px;
   font-weight: 800;
   line-height: 1.1;
 }
@@ -1021,7 +1022,7 @@ a {
   }
 
   .brand-name {
-    font-size: 21px;
+    font-size: 28px;
   }
 
   .app-content {
@@ -1029,7 +1030,7 @@ a {
   }
 
   .greeting-text h1 {
-    font-size: 24px;
+    font-size: 34px;
   }
 
   .greeting-xp {
@@ -1177,7 +1178,7 @@ a {
 
 /* ============ Задания от учителя (ученик, карта) ============ */
 .homework-card { margin-bottom: 16px; }
-.homework-card h2 { margin-bottom: 8px; font-size: 20px; }
+.homework-card h2 { margin-bottom: 8px; font-size: 27px; }
 .homework-list { display: grid; gap: 8px; }
 .homework-row {
   display: flex; gap: 10px; align-items: center; padding: 9px 12px;
