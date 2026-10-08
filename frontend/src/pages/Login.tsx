@@ -6,7 +6,7 @@ import { APP_NAME } from '../constants'
 
 export default function Login() {
   const navigate = useNavigate()
-  const [email, setEmail] = useState('')
+  const [loginIdent, setLoginIdent] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -16,7 +16,7 @@ export default function Login() {
     setError(null)
     setBusy(true)
     try {
-      const res = await login({ email, password })
+      const res = await login({ login: loginIdent.trim(), password })
       setToken(res.access_token)
       navigate('/', { replace: true })
     } catch (err) {
@@ -35,13 +35,13 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="auth-form">
           <label className="field">
-            <span className="field-label">📧 Email</span>
+            <span className="field-label">📧 Email (учитель) или 🐼 Имя (ученик)</span>
             <input
               className="input"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="vasya@school.ru"
+              type="text"
+              value={loginIdent}
+              onChange={(e) => setLoginIdent(e.target.value)}
+              placeholder="vasya@school.ru или Маша"
               required
               autoFocus
             />

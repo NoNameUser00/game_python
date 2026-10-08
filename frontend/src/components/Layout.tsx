@@ -21,6 +21,11 @@ export default function Layout() {
           <NavLink to="/profile" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
             👤 Профиль
           </NavLink>
+          {user?.role === 'teacher' && (
+            <NavLink to="/classes" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+              🏫 Классы
+            </NavLink>
+          )}
         </nav>
 
         <div className="header-right">

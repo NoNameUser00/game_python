@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import MapPage from './pages/MapPage'
 import TaskPage from './pages/TaskPage'
 import ProfilePage from './pages/ProfilePage'
+import ClassesPage from './pages/ClassesPage'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/" element={<MapPage />} />
           <Route path="/task/:id" element={<TaskPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/classes" element={<ClassesPage />} />
         </Route>
       </Route>
 

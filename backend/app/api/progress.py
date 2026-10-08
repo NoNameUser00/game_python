@@ -20,8 +20,15 @@ class ProgressOut(BaseModel):
 
 
 @router.get("/me", response_model=UserOut)
-def me(user: User = Depends(get_current_user)):
-    return user_out(user)
+def me(user: User = Depends(get_current_user),
+       session: Session = Depends(get_session)):
+    from ..models import SchoolClass
+
+    class_name = None
+    if user.class_id is not None:
+        klass = session.get(SchoolClass, user.class_id)
+        class_name = klass.name if klass else None
+    return user_out(user, class_name=class_name)
 
 
 @router.get("/me/progress", response_model=ProgressOut)

@@ -3,7 +3,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .api import auth, progress, tasks
+from .api import auth, classes, progress, tasks
 from .config import RUNNER_MODE
 from .db import init_db
 
@@ -23,6 +23,7 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api")
 app.include_router(tasks.router, prefix="/api")
 app.include_router(progress.router, prefix="/api")
+app.include_router(classes.router, prefix="/api")
 
 
 @app.on_event("startup")

@@ -46,7 +46,14 @@ export default function ProfilePage() {
         </div>
         <div className="profile-info">
           <h1>{user.username}</h1>
-          <p className="profile-email">📧 {user.email}</p>
+          {user.email ? (
+            <p className="profile-email">📧 {user.email}</p>
+          ) : (
+            user.class_name && <p className="profile-email">🏫 Класс: {user.class_name}</p>
+          )}
+          <p className="profile-email">
+            {user.role === 'teacher' ? '🧑‍🏫 Учитель' : '🐼 Ученик'}
+          </p>
           <span className="level-badge big">⭐ Уровень {level}</span>
         </div>
       </section>

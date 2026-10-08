@@ -18,11 +18,35 @@ export class ApiError extends Error {
 
 export interface User {
   id: number
-  email: string
+  email: string | null
   username: string
   xp: number
   level: number
+  role: 'teacher' | 'pupil'
+  class_name: string | null
   created_at: string
+}
+
+export interface SchoolClass {
+  id: number
+  name: string
+  code: string
+  students_count: number
+  created_at: string
+}
+
+export interface ClassStudent {
+  id: number
+  username: string
+  xp: number
+  level: number
+  completed_tasks: number
+  hints_used: number
+}
+
+export interface ClassDetail {
+  class: { id: number; name: string; code: string }
+  students: ClassStudent[]
 }
 
 export interface AuthResponse {
@@ -197,8 +221,33 @@ export async function register(payload: {
   return request<AuthResponse>('/auth/register', { method: 'POST', body: JSON.stringify(payload) }, false)
 }
 
-export async function login(payload: { email: string; password: string }): Promise<AuthResponse> {
+export async function login(payload: { login: string; password: string }): Promise<AuthResponse> {
   return request<AuthResponse>('/auth/login', { method: 'POST', body: JSON.stringify(payload) }, false)
+}
+
+/** Регистрация ученика по коду класса — почта не нужна. */
+export async function registerClass(payload: {
+  code: string
+  username: string
+  password: string
+}): Promise<AuthResponse> {
+  return request<AuthResponse>(
+    '/auth/register-class',
+    { method: 'POST', body: JSON.stringify(payload) },
+    false,
+  )
+}
+
+export async function createClass(name: string): Promise<SchoolClass> {
+  return request<SchoolClass>('/classes', { method: 'POST', body: JSON.stringify({ name }) })
+}
+
+export async function getClasses(): Promise<SchoolClass[]> {
+  return request<SchoolClass[]>('/classes')
+}
+
+export async function getClassStudents(id: number): Promise<ClassDetail> {
+  return request<ClassDetail>(`/classes/${id}/students`)
 }
 
 export async function me(): Promise<User> {

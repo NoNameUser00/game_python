@@ -10,10 +10,22 @@ def utcnow() -> datetime:
 class User(SQLModel, table=True):
     __tablename__ = "users"
     id: int | None = Field(default=None, primary_key=True)
-    email: str = Field(index=True, unique=True)
+    # Учитель — регистрируется по email; ученик — по коду класса (email не нужен)
+    email: str | None = Field(default=None, index=True, unique=True)
     username: str
     password_hash: str
+    role: str = "pupil"                     # teacher | pupil
+    class_id: int | None = Field(default=None, index=True, foreign_key="classes.id")
     xp: int = 0
+    created_at: datetime = Field(default_factory=utcnow)
+
+
+class SchoolClass(SQLModel, table=True):
+    __tablename__ = "classes"
+    id: int | None = Field(default=None, primary_key=True)
+    code: str = Field(index=True, unique=True)   # 6 символов, раздаётся учителем
+    name: str
+    teacher_id: int = Field(index=True)          # без FK — чтобы не было цикла FK
     created_at: datetime = Field(default_factory=utcnow)
 
 

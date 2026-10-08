@@ -17,10 +17,10 @@ def test_register_login_me(client):
         "email": "a@b.ru", "username": "Аня2", "password": "123456"})
     assert resp2.status_code == 409
 
-    # вход
-    login = client.post("/api/auth/login", json={"email": "a@b.ru", "password": "123456"})
+    # вход (email — учитель, имя — ученик)
+    login = client.post("/api/auth/login", json={"login": "a@b.ru", "password": "123456"})
     assert login.status_code == 200
-    bad = client.post("/api/auth/login", json={"email": "a@b.ru", "password": "wrong"})
+    bad = client.post("/api/auth/login", json={"login": "a@b.ru", "password": "wrong"})
     assert bad.status_code == 401
 
     me = client.get("/api/me", headers={"Authorization": f"Bearer {token}"})

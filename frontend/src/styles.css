@@ -986,3 +986,47 @@ a {
     min-width: 100%;
   }
 }
+
+/* ============ Регистрация: выбор роли ============ */
+.auth-tabs {
+  display: flex; gap: 8px; margin-bottom: 14px;
+}
+.auth-tab {
+  flex: 1; padding: 10px; font-size: 15px; font-weight: 600; cursor: pointer;
+  background: #f4f1ff; border: 2px solid #e3ddf5; border-radius: 12px; color: #6b63a0;
+}
+.auth-tab.active {
+  background: #eafaf0; border-color: #35c06f; color: #1c7a45;
+}
+.code-input {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 20px !important; letter-spacing: 4px; text-transform: uppercase; text-align: center;
+}
+.auth-hint {
+  font-size: 13px; color: #7c76a8; text-align: center; margin: 2px 0;
+}
+
+/* ============ Панель учителя: классы ============ */
+.classes-page h1 { margin: 0 0 6px; }
+.class-create { margin-bottom: 18px; }
+.class-form { display: flex; gap: 10px; margin-top: 12px; }
+.class-form .input { flex: 1; }
+.class-card { margin-bottom: 14px; }
+.class-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 10px;
+}
+.class-head h2 { margin: 0; }
+.class-code {
+  font-family: ui-monospace, Consolas, monospace; font-size: 20px; font-weight: 700;
+  letter-spacing: 3px; padding: 10px 16px; border-radius: 12px; cursor: pointer;
+  background: #fff7e0; border: 2px dashed #f0b429; color: #8a5b00;
+}
+.students-list { margin-top: 12px; display: grid; gap: 6px; }
+.student-row {
+  display: flex; gap: 12px; align-items: center; padding: 8px 12px;
+  background: #f7f5ff; border-radius: 10px; font-size: 15px;
+}
+.student-pos { font-weight: 700; color: #8a80c0; min-width: 34px; }
+.student-name { flex: 1; font-weight: 600; }
+.student-stat { color: #5f5890; font-size: 14px; }
