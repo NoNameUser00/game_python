@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { getTopics } from '../api/client'
-import type { Topic } from '../api/client'
+import { getMyAssignments, getTopics } from '../api/client'
+import type { Assignment, Topic } from '../api/client'
 import { useAuth } from '../auth'
 import XPBar from '../components/XPBar'
 import Stars from '../components/Stars'
@@ -10,6 +10,7 @@ export default function MapPage() {
   const navigate = useNavigate()
   const { user, refresh } = useAuth()
   const [topics, setTopics] = useState<Topic[] | null>(null)
+  const [assignments, setAssignments] = useState<Assignment[]>([])
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -17,7 +18,11 @@ export default function MapPage() {
     getTopics()
       .then(setTopics)
       .catch((err: unknown) => setError(err instanceof Error ? err.message : 'Не удалось загрузить карту'))
-  }, [refresh])
+    // задания от учителя (для учителя пустой список)
+    if (user?.role === 'pupil') {
+      getMyAssignments().then(setAssignments).catch(() => undefined)
+    }
+  }, [refresh, user?.role])
 
   if (error) {
     return (
@@ -59,6 +64,28 @@ export default function MapPage() {
           <span className="solved-pill">✅ Решено задач: {solvedCount}</span>
         </div>
       </section>
+
+      {assignments.length > 0 && (
+        <section className="card homework-card">
+          <h2>📋 Задания от учителя</h2>
+          <div className="homework-list">
+            {assignments.map((a) => (
+              <button
+                type="button"
+                key={a.id}
+                className={a.completed ? 'homework-row done' : 'homework-row'}
+                onClick={() => navigate(`/task/${a.task_id}`)}
+              >
+                <span>
+                  {a.icon} {a.title}
+                </span>
+                <span className="homework-topic">{a.topic}</span>
+                <span className="homework-status">{a.completed ? '✅ сделано' : '▶ делать'}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
 
       {topics.length === 0 && (
         <div className="center-message">

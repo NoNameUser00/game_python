@@ -16,6 +16,7 @@ router = APIRouter(tags=["tasks"])
 # ---------------------------------------------------------------- схемы ответов
 class TaskNode(BaseModel):
     id: int
+    slug: str
     title: str
     difficulty: int
     completed: bool
@@ -70,6 +71,7 @@ class SubmitOut(BaseModel):
     completed: bool
     tests: list[TestOut]
     message: str | None = None
+    new_achievements: list[dict] = []   # значки, открытые этой отправкой (№10)
 
 
 class HintOut(BaseModel):
@@ -100,7 +102,8 @@ def topics(session: Session = Depends(get_session),
             ).all()
             lesson_nodes.append(LessonNode(
                 id=lesson.id, slug=lesson.slug, title=lesson.title, order=lesson.order,
-                tasks=[TaskNode(id=t.id, title=t.title, difficulty=t.difficulty,
+                tasks=[TaskNode(id=t.id, slug=t.slug, title=t.title,
+                                difficulty=t.difficulty,
                                 completed=t.id in completed_ids)
                        for t in tasks],
             ))
@@ -154,6 +157,9 @@ def task_submit(task_id: int, payload: SubmitIn,
     tests = json.loads(task.tests_json)
     outcome = get_runner().run(payload.code, task.function, tests)
 
+    from ..achievements import new_after, unlocked_keys
+    ach_before = unlocked_keys(user, session)
+
     progress = _get_progress(session, user.id, task.id)
     was_completed = progress.completed
     progress.attempts += 1
@@ -172,12 +178,15 @@ def task_submit(task_id: int, payload: SubmitIn,
                            code=payload.code, status=outcome.status))
     session.commit()
 
+    fresh = new_after(user, session, ach_before)
+
     return SubmitOut(
         status=outcome.status,
         xp_gained=xp_gained,
         completed=progress.completed,
         tests=[TestOut(**vars(t)) for t in outcome.tests],
         message=outcome.message,
+        new_achievements=fresh,
     )
 
 

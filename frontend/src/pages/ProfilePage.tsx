@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react'
-import { getProgress, me } from '../api/client'
-import type { Progress, User } from '../api/client'
+import { getAchievements, getProgress, me } from '../api/client'
+import type { AchievementsResponse, Progress, User } from '../api/client'
 import XPBar from '../components/XPBar'
 
 export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null)
   const [progress, setProgress] = useState<Progress | null>(null)
+  const [achievements, setAchievements] = useState<AchievementsResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    Promise.all([me(), getProgress()])
-      .then(([u, p]) => {
+    Promise.all([me(), getProgress(), getAchievements()])
+      .then(([u, p, a]) => {
         setUser(u)
         setProgress(p)
+        setAchievements(a)
       })
       .catch((err: unknown) => setError(err instanceof Error ? err.message : 'Не удалось загрузить профиль'))
   }, [])
@@ -83,6 +85,30 @@ export default function ProfilePage() {
           <div className="stat-label">подсказок использовано</div>
         </div>
       </section>
+
+      {achievements && achievements.items.length > 0 && (
+        <section className="card achievements-card">
+          <h2>
+            🏆 Достижения{' '}
+            <span className="xp-note">
+              открыто {achievements.unlocked.length} из {achievements.items.length}
+            </span>
+          </h2>
+          <div className="achievements-grid">
+            {achievements.items.map((a) => (
+              <div
+                key={a.key}
+                className={a.unlocked ? 'achievement unlocked' : 'achievement locked'}
+                title={a.desc}
+              >
+                <span className="achievement-emoji">{a.unlocked ? a.emoji : '🔒'}</span>
+                <span className="achievement-title">{a.title}</span>
+                <span className="achievement-desc">{a.desc}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

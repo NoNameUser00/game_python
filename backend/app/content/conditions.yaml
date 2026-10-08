@@ -73,3 +73,73 @@ lessons:
             expected: -1
           - input: [10, 2, 7]
             expected: 10
+
+      - slug: sign-number
+        title: Плюс, минус или ноль
+        difficulty: 3
+        xp_reward: 30
+        function: sign
+        prompt_md: |
+          ## Знак числа ➕➖
+
+          Напиши функцию `sign(n)`, которая возвращает знак числа:
+          - `1`, если число положительное,
+          - `-1`, если отрицательное,
+          - `0`, если ровно ноль.
+
+          **Примеры:**
+          - `sign(5)` → `1`
+          - `sign(-3)` → `-1`
+          - `sign(0)` → `0`
+        starter_code: |
+          def sign(n):
+              # верни 1, -1 или 0
+              pass
+        hints:
+          - "Сначала проверь особый случай: if n == 0 — верни 0"
+          - "Для остальных чисел подойдёт: return 1 if n > 0 else -1"
+        tests:
+          - input: [5]
+            expected: 1
+          - input: [-3]
+            expected: -1
+          - input: [0]
+            expected: 0
+          - input: [100]
+            expected: 1
+
+      - slug: leap-year
+        title: Високосный год
+        difficulty: 3
+        xp_reward: 30
+        function: is_leap
+        prompt_md: |
+          ## Високосный год 📅
+
+          Високосный год делится на 4 — но не всегда! Годы, которые делятся на 100,
+          не високосные, кроме тех, что делятся ещё и на 400.
+          Например, 2024 и 2000 — високосные, а 1900 и 2023 — обычные.
+
+          Напиши функцию `is_leap(year)`, которая возвращает `True` для високосного
+          года и `False` — для обычного.
+
+          **Примеры:**
+          - `is_leap(2024)` → `True`
+          - `is_leap(1900)` → `False`
+          - `is_leap(2000)` → `True`
+        starter_code: |
+          def is_leap(year):
+              # верни True, если год високосный
+              pass
+        hints:
+          - "Начни с проверки year % 4 == 0 — без неё не бывает високосных годов"
+          - "Потом исключение: если год делится на 100, но не делится на 400 — он не високосный"
+        tests:
+          - input: [2024]
+            expected: true
+          - input: [1900]
+            expected: false
+          - input: [2000]
+            expected: true
+          - input: [2023]
+            expected: false

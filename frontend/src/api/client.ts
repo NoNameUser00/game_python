@@ -108,6 +108,7 @@ export interface SubmitResult {
   completed: boolean
   tests: TestResult[]
   message: string | null
+  new_achievements: Achievement[]
 }
 
 export interface HintResult {
@@ -122,6 +123,67 @@ export interface Progress {
   completed_tasks: number[]
   submissions: number
   hints_used: number
+}
+
+/* ---------- расширенный режим учителя (№7) и достижения (№10) ---------- */
+
+export interface LeaderRow {
+  place: number
+  id: number
+  username: string
+  xp: number
+  level: number
+  completed_tasks: number
+}
+
+export interface TopicStat {
+  title: string
+  icon: string
+  tasks: number
+  solved: number
+}
+
+export interface TaskStat {
+  id: number
+  title: string
+  topic: string
+  done_count: number
+}
+
+export interface ClassStats {
+  students: number
+  active_7d: number
+  avg_xp: number
+  total_completed: number
+  total_tasks: number
+  per_topic: TopicStat[]
+  per_task: TaskStat[]
+}
+
+export interface Assignment {
+  id: number
+  task_id: number
+  title: string
+  topic: string
+  icon: string
+  difficulty: number
+  created_at: string
+  completed?: boolean
+  done_count?: number
+  students_count?: number
+}
+
+export interface Achievement {
+  key: string
+  emoji: string
+  title: string
+  desc: string
+  unlocked?: boolean
+}
+
+export interface AchievementsResponse {
+  unlocked: string[]
+  items: Achievement[]
 }
 
 /* ---------- токен ---------- */
@@ -315,4 +377,51 @@ export async function requestHint(id: number): Promise<HintResult> {
 
 export async function getProgress(): Promise<Progress> {
   return request<Progress>('/me/progress')
+}
+
+export async function getAchievements(): Promise<AchievementsResponse> {
+  return request<AchievementsResponse>('/me/achievements')
+}
+
+/** Лидерборд класса (видит учитель-владелец и ученики класса). */
+export async function getLeaderboard(classId: number): Promise<LeaderRow[]> {
+  return request<LeaderRow[]>(`/classes/${classId}/leaderboard`)
+}
+
+/** Расширенная статистика класса — только для учителя-владельца. */
+export async function getClassStats(classId: number): Promise<ClassStats> {
+  return request<ClassStats>(`/classes/${classId}/stats`)
+}
+
+/** Назначить задачу классу. */
+export async function createAssignment(classId: number, taskId: number): Promise<unknown> {
+  return request(`/classes/${classId}/assignments`, {
+    method: 'POST',
+    body: JSON.stringify({ task_id: taskId }),
+  })
+}
+
+export async function getClassAssignments(classId: number): Promise<Assignment[]> {
+  return request<Assignment[]>(`/classes/${classId}/assignments`)
+}
+
+export async function deleteAssignment(id: number): Promise<void> {
+  await request(`/assignments/${id}`, { method: 'DELETE' })
+}
+
+/** Мои задания от учителя (для ученика). */
+export async function getMyAssignments(): Promise<Assignment[]> {
+  return request<Assignment[]>('/assignments')
+}
+
+/** Учитель задаёт ученику новый пароль. */
+export async function resetStudentPassword(
+  classId: number,
+  studentId: number,
+  password: string,
+): Promise<{ ok: boolean; username: string }> {
+  return request(`/classes/${classId}/students/${studentId}/password`, {
+    method: 'POST',
+    body: JSON.stringify({ password }),
+  })
 }

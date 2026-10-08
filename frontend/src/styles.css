@@ -1039,3 +1039,106 @@ a {
   padding: 10px 14px; border-radius: 10px; font-size: 15px; font-weight: 600;
   background: #eafaf0; border: 1px solid #9be0b8; color: #1c7a45;
 }
+
+/* ============ Достижения (значки) ============ */
+.achievements-card { margin-top: 16px; }
+.achievements-card h2 { margin-bottom: 12px; }
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+.achievement {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 4px; padding: 14px 8px; border-radius: 14px;
+}
+.achievement.unlocked {
+  background: linear-gradient(160deg, #fffdf3, #fff3c4);
+  border: 2px solid #f0d060;
+}
+.achievement.locked {
+  background: #f7f6fa; border: 2px dashed #dcd8ea; opacity: 0.75;
+}
+.achievement-emoji { font-size: 32px; line-height: 1; }
+.achievement-title { font-weight: 800; font-size: 14px; color: var(--ink); }
+.achievement.locked .achievement-title { color: #9a94b8; }
+.achievement-desc { font-size: 12px; color: var(--ink-soft); }
+
+/* Тост нового достижения на странице задачи */
+.ach-toast {
+  margin-top: 10px; padding: 12px 14px; border-radius: 14px;
+  background: linear-gradient(160deg, #fffdf3, #fff0b8);
+  border: 2px solid #f0c040; font-size: 15px;
+  animation: pop 0.25s ease;
+}
+.ach-toast-row { display: flex; gap: 10px; align-items: center; }
+.ach-toast-emoji { font-size: 30px; }
+
+/* ============ Панель учителя: вкладки, лидерборд, статистика, задания ============ */
+.class-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.class-tab {
+  padding: 8px 14px; font-size: 14px; font-weight: 700; cursor: pointer;
+  background: #f4f1ff; border: 2px solid #e3ddf5; border-radius: 999px; color: #6b63a0;
+}
+.class-tab.active {
+  background: #eafaf0; border-color: #35c06f; color: #1c7a45;
+}
+
+.leader-row { position: relative; }
+.leader-row.medal-1 { background: linear-gradient(90deg, #fff7d6, #f7f5ff); }
+.leader-row.medal-2 { background: linear-gradient(90deg, #f2f4f8, #f7f5ff); }
+.leader-row.medal-3 { background: linear-gradient(90deg, #ffeede, #f7f5ff); }
+.leader-place { font-size: 17px; min-width: 36px; }
+
+.stats-bars { display: grid; gap: 10px; margin-top: 10px; }
+.stat-bar-label {
+  display: flex; justify-content: space-between; gap: 8px;
+  font-size: 14px; font-weight: 700; margin-bottom: 4px;
+}
+.stat-bar-track {
+  height: 12px; background: #eee9ff; border-radius: 999px; overflow: hidden;
+}
+.stat-bar-fill {
+  height: 100%; background: linear-gradient(90deg, #7c6ee6, #35c06f);
+  border-radius: 999px; transition: width 0.4s ease;
+}
+
+.assign-form { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 14px; }
+.assign-form select { flex: 1; min-width: 220px; }
+.assign-row {
+  display: flex; gap: 10px; align-items: center; padding: 8px 12px;
+  background: #f7f5ff; border-radius: 10px; font-size: 15px; flex-wrap: wrap;
+}
+.assign-title { flex: 1; font-weight: 600; min-width: 160px; }
+.assign-progress { font-size: 13px; color: #5f5890; font-weight: 700; }
+.assign-del {
+  border: none; background: #ffe4e4; color: #b03030; cursor: pointer;
+  border-radius: 8px; padding: 5px 9px; font-size: 14px; font-weight: 700;
+}
+.assign-del:hover { background: #ffc9c9; }
+
+.icon-btn {
+  border: none; background: #eef0ff; color: #4a43a0; cursor: pointer;
+  border-radius: 8px; padding: 4px 9px; font-size: 13px; font-weight: 700;
+}
+.icon-btn:hover { background: #e0e3ff; }
+
+/* ============ Задания от учителя (ученик, карта) ============ */
+.homework-card { margin-bottom: 16px; }
+.homework-card h2 { margin-bottom: 8px; font-size: 20px; }
+.homework-list { display: grid; gap: 8px; }
+.homework-row {
+  display: flex; gap: 10px; align-items: center; padding: 9px 12px;
+  background: #f7f5ff; border-radius: 10px; font-size: 15px;
+}
+.homework-row.done { background: #eafaf0; }
+.homework-topic { color: #5f5890; font-size: 13px; font-weight: 700; }
+.homework-status { font-weight: 800; font-size: 14px; }
+.homework-row.done .homework-status { color: #1c7a45; }
+
+/* строка-кнопка задания должна тянуться на всю ширину */
+button.homework-row {
+  width: 100%; border: none; cursor: pointer; font-family: inherit;
+  text-align: left; font-size: 15px;
+}
+button.homework-row:hover { outline: 2px solid #cfc7f5; }

@@ -3,7 +3,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .api import auth, classes, progress, tasks
+from .api import assignments, auth, classes, progress, tasks
 from .config import RUNNER_MODE
 from .db import init_db
 from .users import UserRead, fastapi_users
@@ -25,6 +25,7 @@ app.include_router(auth.router, prefix="/api")
 app.include_router(tasks.router, prefix="/api")
 app.include_router(progress.router, prefix="/api")
 app.include_router(classes.router, prefix="/api")
+app.include_router(assignments.router, prefix="/api")
 
 # Роуты fastapi-users: сброс пароля и подтверждение почты
 app.include_router(fastapi_users.get_reset_password_router(), prefix="/api/auth")

@@ -39,6 +39,38 @@ lessons:
           - input: ["Кот"]
             expected: "Привет, Кот!"
 
+      - slug: count-letters
+        title: Сколько раз встретилась буква
+        difficulty: 3
+        xp_reward: 30
+        function: count_letters
+        prompt_md: |
+          ## Один и тот же символ 🔍
+
+          Напиши функцию `count_letters(s, ch)`, которая считает, сколько раз
+          буква `ch` встречается в строке `s`. Регистр не важен: `А` и `а` — одно и то же.
+
+          **Примеры:**
+          - `count_letters("каравай", "а")` → `3`
+          - `count_letters("Питонята", "т")` → `2`
+          - `count_letters("привет", "я")` → `0`
+        starter_code: |
+          def count_letters(s, ch):
+              # посчитай, сколько раз ch встречается в s
+              pass
+        hints:
+          - "Приведи и строку, и букву к нижнему регистру: s.lower() и ch.lower()"
+          - "Заведи счётчик count = 0 и в цикле увеличивай его, когда буквы совпадают"
+        tests:
+          - input: ["мама", "а"]
+            expected: 2
+          - input: ["Питонята", "т"]
+            expected: 2
+          - input: ["привет", "я"]
+            expected: 0
+          - input: ["ААаа", "а"]
+            expected: 4
+
   - slug: numbers
     title: Числа и вычисления
     order: 2
@@ -70,3 +102,39 @@ lessons:
             expected: 3
           - input: [10, 20]
             expected: 30
+
+      - slug: is-prime
+        title: Простое число
+        difficulty: 3
+        xp_reward: 30
+        function: is_prime
+        prompt_md: |
+          ## Простое число 🔐
+
+          Простое число — это число больше 1, которое делится только на 1 и на себя:
+          2, 3, 5, 7, 11, 13...
+
+          Напиши функцию `is_prime(n)`, которая возвращает `True`, если `n` — простое,
+          и `False` — если нет.
+
+          **Примеры:**
+          - `is_prime(2)` → `True`
+          - `is_prime(7)` → `True`
+          - `is_prime(9)` → `False` (9 = 3 · 3)
+          - `is_prime(1)` → `False`
+        starter_code: |
+          def is_prime(n):
+              # верни True, если n — простое число
+              pass
+        hints:
+          - "Числа меньше 2 никогда не простые — сразу верни False"
+          - "Если n % i == 0 для какого-то i от 2 до n - 1, число не простое"
+        tests:
+          - input: [2]
+            expected: true
+          - input: [7]
+            expected: true
+          - input: [9]
+            expected: false
+          - input: [1]
+            expected: false

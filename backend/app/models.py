@@ -89,3 +89,13 @@ class Submission(SQLModel, table=True):
     code: str
     status: str
     created_at: datetime = Field(default_factory=utcnow)
+
+
+class Assignment(SQLModel, table=True):
+    """Задание учителя: задача, назначенная классу (расширенный режим)."""
+    __tablename__ = "assignments"
+    id: int | None = Field(default=None, primary_key=True)
+    class_id: int = Field(index=True, foreign_key="classes.id")
+    task_id: int = Field(index=True, foreign_key="tasks.id")
+    created_by: int                          # id учителя
+    created_at: datetime = Field(default_factory=utcnow)

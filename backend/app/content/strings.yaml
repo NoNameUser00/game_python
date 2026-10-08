@@ -70,3 +70,72 @@ lessons:
             expected: 0
           - input: ["АЕЁ"]
             expected: 3
+
+      - slug: is-palindrome
+        title: Палиндром
+        difficulty: 3
+        xp_reward: 30
+        function: is_palindrome
+        prompt_md: |
+          ## Палиндром 🪞
+
+          Палиндром — строка, которая читается одинаково слева направо
+          и справа налево (например, «шалаш» или «121»).
+
+          Напиши функцию `is_palindrome(s)`, которая возвращает `True`,
+          если строка `s` — палиндром, и `False` — если нет.
+
+          **Примеры:**
+          - `is_palindrome("шалаш")` → `True`
+          - `is_palindrome("python")` → `False`
+          - `is_palindrome("121")` → `True`
+          - `is_palindrome("")` → `True`
+        starter_code: |
+          def is_palindrome(s):
+              # верни True, если строка читается одинаково
+              pass
+        hints:
+          - "Сравни строку с её переворотом: s == s[::-1]"
+          - "Можно и циклом: сравнивай символы s[i] и s[-i - 1] с разных концов"
+        tests:
+          - input: ["шалаш"]
+            expected: true
+          - input: ["python"]
+            expected: false
+          - input: ["121"]
+            expected: true
+          - input: [""]
+            expected: true
+
+      - slug: initials
+        title: Инициалы
+        difficulty: 3
+        xp_reward: 30
+        function: initials
+        prompt_md: |
+          ## Инициалы ✒️
+
+          Напиши функцию `initials(full_name)`: она получает полное имя
+          (слова разделены пробелами) и возвращает инициалы вида `И.И.`
+
+          **Примеры:**
+          - `initials("Иван Иванов")` → `"И.И."`
+          - `initials("петр")` → `"П."`
+          - `initials("Анна Мария Петрова")` → `"А.М.П."`
+          - `initials("")` → `""`
+        starter_code: |
+          def initials(full_name):
+              # собери инициалы вида И.И.
+              pass
+        hints:
+          - "Разбей строку на слова методом split()"
+          - "Для каждого слова возьми word[0].upper() + '.' и соедини результаты через ''.join(...)"
+        tests:
+          - input: ["Иван Иванов"]
+            expected: "И.И."
+          - input: ["петр"]
+            expected: "П."
+          - input: ["Анна Мария Петрова"]
+            expected: "А.М.П."
+          - input: [""]
+            expected: ""

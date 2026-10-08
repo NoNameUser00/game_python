@@ -224,6 +224,21 @@ export default function TaskPage() {
 
         {result && (
           <>
+            {result.new_achievements.length > 0 && (
+              <div className="ach-toast pop">
+                {result.new_achievements.map((a) => (
+                  <div className="ach-toast-row" key={a.key}>
+                    <span className="ach-toast-emoji">{a.emoji}</span>
+                    <span>
+                      <strong>Новое достижение: {a.title}!</strong>
+                      <br />
+                      {a.desc}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {result.status === 'accepted' ? (
               <div className="platter platter-ok pop">
                 🎉 Задача решена!{' '}

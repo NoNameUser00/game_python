@@ -72,3 +72,69 @@ lessons:
             expected: 12
           - input: [[]]
             expected: 0
+
+      - slug: long-words
+        title: Только длинные слова
+        difficulty: 3
+        xp_reward: 30
+        function: long_words
+        prompt_md: |
+          ## Длинные слова 📏
+
+          Напиши функцию `long_words(words)`, которая возвращает **новый список**,
+          в котором остались только слова длиннее трёх букв.
+          Порядок слов сохраняется.
+
+          **Примеры:**
+          - `long_words(["я", "кот", "питон", "мир"])` → `["питон"]`
+          - `long_words(["мир", "строка"])` → `["строка"]`
+          - `long_words([])` → `[]`
+        starter_code: |
+          def long_words(words):
+              # оставь только слова длиннее 3 букв
+              pass
+        hints:
+          - "Длина слова — это len(word); нужны слова с len(word) > 3"
+          - "Создай пустой список result = [], добавляй в него подходящие слова и верни его"
+        tests:
+          - input: [["я", "кот", "питон", "мир"]]
+            expected: ["питон"]
+          - input: [["мир", "строка"]]
+            expected: ["строка"]
+          - input: [[]]
+            expected: []
+          - input: [["аааа", "бб"]]
+            expected: ["аааа"]
+
+      - slug: unique-items
+        title: Без повторов
+        difficulty: 3
+        xp_reward: 30
+        function: unique_items
+        prompt_md: |
+          ## Убери повторы 🧹
+
+          Напиши функцию `unique_items(items)`, которая возвращает новый список
+          без повторяющихся элементов. Порядок появления сохраняется —
+          остаётся то вхождение, которое было первым.
+
+          **Примеры:**
+          - `unique_items([1, 2, 1, 3])` → `[1, 2, 3]`
+          - `unique_items(["а", "а", "б"])` → `["а", "б"]`
+          - `unique_items([])` → `[]`
+        starter_code: |
+          def unique_items(items):
+              # верни список без повторов
+              pass
+        hints:
+          - "Заведи пустой список result = [] и добавляй элемент, только если его там ещё нет"
+          - "Проверка работает так: if x not in result: result.append(x)"
+        tests:
+          - input: [[1, 2, 1, 3]]
+            expected: [1, 2, 3]
+          - input: [["а", "а", "б"]]
+            expected: ["а", "б"]
+          - input: [[3, 3, 3]]
+            expected: [3]
+          - input: [[]]
+            expected: []

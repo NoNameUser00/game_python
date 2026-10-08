@@ -72,3 +72,68 @@ lessons:
             expected: "Один"
           - input: [{"А": 1, "Б": 100, "В": 50}]
             expected: "Б"
+
+      - slug: count-all-words
+        title: Словарь частот
+        difficulty: 3
+        xp_reward: 30
+        function: count_all_words
+        prompt_md: |
+          ## Сколько раз каждое слово 📊
+
+          Напиши функцию `count_all_words(words)`, которая возвращает словарь:
+          ключи — слова из списка, значения — сколько раз они встретились.
+
+          **Примеры:**
+          - `count_all_words(["яблоко", "груша", "яблоко"])` → `{"яблоко": 2, "груша": 1}`
+          - `count_all_words(["кот", "кот"])` → `{"кот": 2}`
+          - `count_all_words([])` → `{}`
+        starter_code: |
+          def count_all_words(words):
+              # собери словарь {слово: сколько раз встретилось}
+              pass
+        hints:
+          - "Создай пустой словарь count = {} и проверяй: if word in count"
+          - "Если слово уже было — count[word] += 1, иначе count[word] = 1"
+        tests:
+          - input: [["яблоко", "груша", "яблоко"]]
+            expected: {"яблоко": 2, "груша": 1}
+          - input: [["кот", "кот"]]
+            expected: {"кот": 2}
+          - input: [[]]
+            expected: {}
+          - input: [["а", "б", "а", "в", "а"]]
+            expected: {"а": 3, "б": 1, "в": 1}
+
+      - slug: most-frequent
+        title: Самое частое слово
+        difficulty: 3
+        xp_reward: 30
+        function: most_frequent
+        prompt_md: |
+          ## Кто встречается чаще всех 🏆
+
+          Напиши функцию `most_frequent(words)`, которая возвращает слово,
+          встречающееся в списке чаще всех. Если таких несколько —
+          верни то, которое встретилось первым. Для пустого списка верни `""`.
+
+          **Примеры:**
+          - `most_frequent(["кот", "пёс", "кот"])` → `"кот"`
+          - `most_frequent(["а", "б"])` → `"а"`
+          - `most_frequent([])` → `""`
+        starter_code: |
+          def most_frequent(words):
+              # верни самое частое слово
+              pass
+        hints:
+          - "Сначала посчитай частоты слов (как в прошлой задаче), потом найди максимум по значениям"
+          - "Словарь хранит порядок вставки, поэтому max(count, key=count.get) вернёт первое из самых частых; не забудь проверку на пустой список"
+        tests:
+          - input: [["кот", "пёс", "кот"]]
+            expected: "кот"
+          - input: [["а", "б"]]
+            expected: "а"
+          - input: [[]]
+            expected: ""
+          - input: [["х", "у", "х", "у"]]
+            expected: "х"

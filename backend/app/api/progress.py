@@ -45,3 +45,13 @@ def progress(user: User = Depends(get_current_user),
         submissions=len(submissions),
         hints_used=sum(r.hints_used for r in rows),
     )
+
+
+@router.get("/me/achievements")
+def achievements(user: User = Depends(get_current_user),
+                 session: Session = Depends(get_session)):
+    """Все значки: какие уже открыты (для страницы профиля)."""
+    from ..achievements import catalogue
+    items = catalogue(user, session)
+    return {"unlocked": [i["key"] for i in items if i["unlocked"]],
+            "items": items}
