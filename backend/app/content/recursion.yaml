@@ -1,0 +1,124 @@
+slug: recursion
+title: Рекурсия
+icon: "🔁"
+order: 8
+lessons:
+  - slug: recursion
+    title: Рекурсия
+    order: 1
+    tasks:
+      - slug: factorial-rec
+        title: Факториал рекурсией
+        difficulty: 3
+        xp_reward: 30
+        function: factorial
+        prompt_md: |
+          ## Факториал 🧮
+
+          Факториал числа `n` — это произведение всех чисел от 1 до `n`:
+          `n! = 1 × 2 × … × n`. По договорённости `0! = 1`.
+
+          Напиши **рекурсивную** функцию `factorial(n)` — та, которая вызывает
+          саму себя.
+
+          **Примеры:**
+          - `factorial(0)` → `1`
+          - `factorial(5)` → `120`
+          - `factorial(10)` → `3628800`
+
+          > Подсказка: рекурсия — это случай, когда функция вызывает сама себя.
+          > Не забудь про базу: `n == 0` → `1`.
+        starter_code: |
+          def factorial(n):
+              # рекурсивно посчитай n!
+              pass
+        hints:
+          - "База рекурсии: factorial(0) = 1"
+          - "Шаг: factorial(n) = n * factorial(n - 1)"
+          - "Не уходи в бесконечную рекурсию — всегда уменьшай n"
+        tests:
+          - input: [0]
+            expected: 1
+          - input: [1]
+            expected: 1
+          - input: [5]
+            expected: 120
+          - input: [10]
+            expected: 3628800
+
+      - slug: fibonacci-rec
+        title: Числа Фибоначчи рекурсией
+        difficulty: 4
+        xp_reward: 40
+        function: fibonacci
+        prompt_md: |
+          ## Числа Фибоначчи 🐚
+
+          Последовательность Фибоначчи: `0, 1, 1, 2, 3, 5, 8, 13, …`
+          Каждое следующее число — сумма двух предыдущих.
+
+          Напиши **рекурсивную** функцию `fibonacci(n)`, которая возвращает
+          n-й элемент (нумерация с нуля): `fibonacci(0) = 0`, `fibonacci(1) = 1`.
+
+          **Примеры:**
+          - `fibonacci(0)` → `0`
+          - `fibonacci(1)` → `1`
+          - `fibonacci(7)` → `13`
+          - `fibonacci(10)` → `55`
+
+          > Подсказка: база — `n <= 1`, шаг — сумма двух предыдущих.
+        starter_code: |
+          def fibonacci(n):
+              # рекурсивно найди n-е число Фибоначчи
+              pass
+        hints:
+          - "База: fibonacci(0) = 0, fibonacci(1) = 1"
+          - "Шаг: fibonacci(n) = fibonacci(n-1) + fibonacci(n-2)"
+          - "Рекурсия без базы уйдёт в бесконечность"
+        tests:
+          - input: [0]
+            expected: 0
+          - input: [1]
+            expected: 1
+          - input: [7]
+            expected: 13
+          - input: [10]
+            expected: 55
+
+      - slug: sum-digits
+        title: Сумма цифр числа
+        difficulty: 3
+        xp_reward: 30
+        function: sum_digits
+        prompt_md: |
+          ## Сумма цифр 🔢
+
+          Напиши функцию `sum_digits(n)`, которая рекурсивно считает сумму цифр
+          числа. Для отрицательных чисел работай с модулем.
+
+          **Примеры:**
+          - `sum_digits(123)` → `6`
+          - `sum_digits(0)` → `0`
+          - `sum_digits(9999)` → `36`
+          - `sum_digits(5)` → `5`
+
+          > Подсказка: последняя цифра — это `n % 10`, остальное — `n // 10`.
+        starter_code: |
+          def sum_digits(n):
+              # рекурсивно сложи цифры числа
+              pass
+        hints:
+          - "База: n < 10 → вернуть n"
+          - "Шаг: (n % 10) + sum_digits(n // 10)"
+          - "Для отрицательных чисел возьми abs(n) в начале"
+        tests:
+          - input: [123]
+            expected: 6
+          - input: [0]
+            expected: 0
+          - input: [9999]
+            expected: 36
+          - input: [5]
+            expected: 5
+          - input: [-123]
+            expected: 6

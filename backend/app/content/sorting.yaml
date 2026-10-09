@@ -1,0 +1,161 @@
+slug: sorting
+title: Сортировки и поиск
+icon: "🔢"
+order: 7
+lessons:
+  - slug: sorting
+    title: Сортировка
+    order: 1
+    tasks:
+      - slug: bubble-sort
+        title: Сортировка пузырьком
+        difficulty: 3
+        xp_reward: 30
+        function: bubble_sort
+        prompt_md: |
+          ## Сортировка пузырьком 🫧
+
+          Напиши функцию `bubble_sort(items)`, которая сортирует список чисел
+          по возрастанию **пузырьком**: идём по списку и меняем местами соседние
+          элементы, если левый больше правого. Повторяем, пока всё не
+          устаканится.
+
+          **Примеры:**
+          - `bubble_sort([3, 1, 2])` → `[1, 2, 3]`
+          - `bubble_sort([5, 4, 3, 2, 1])` → `[1, 2, 3, 4, 5]`
+          - `bubble_sort([])` → `[]`
+
+          > Подсказка: два вложенных цикла. Внешний — сколько раз проходим по
+          > списку, внутренний — сравниваем соседей.
+        starter_code: |
+          def bubble_sort(items):
+              # отсортируй список пузырьком
+              pass
+        hints:
+          - "Сравнивай items[j] и items[j+1], меняй местами, если левый больше"
+          - "После каждого прохода самый большой элемент «всплывает» в конец"
+          - "Не забудь вернуть список из функции"
+        tests:
+          - input: [[3, 1, 2]]
+            expected: [1, 2, 3]
+          - input: [[5, 4, 3, 2, 1]]
+            expected: [1, 2, 3, 4, 5]
+          - input: [[]]
+            expected: []
+          - input: [[1]]
+            expected: [1]
+          - input: [[2, 2, 1]]
+            expected: [1, 2, 2]
+
+      - slug: find-min
+        title: Минимум списка
+        difficulty: 2
+        xp_reward: 20
+        function: find_min
+        prompt_md: |
+          ## Самый маленький 🔍
+
+          Напиши функцию `find_min(items)`, которая возвращает минимальный
+          элемент списка чисел.
+
+          **Примеры:**
+          - `find_min([3, 1, 2])` → `1`
+          - `find_min([-5, 0, 5])` → `-5`
+          - `find_min([7])` → `7`
+
+          > Подсказка: заведи переменную `best` и обновляй её в цикле.
+        starter_code: |
+          def find_min(items):
+              # найди минимальный элемент
+              pass
+        hints:
+          - "Начни с best = items[0], потом сравнивай с каждым следующим"
+          - "Если текущий элемент меньше best — запомни его"
+        tests:
+          - input: [[3, 1, 2]]
+            expected: 1
+          - input: [[-5, 0, 5]]
+            expected: -5
+          - input: [[7]]
+            expected: 7
+          - input: [[2, 2, 2]]
+            expected: 2
+
+  - slug: search
+    title: Поиск
+    order: 2
+    tasks:
+      - slug: linear-search
+        title: Линейный поиск
+        difficulty: 2
+        xp_reward: 20
+        function: linear_search
+        prompt_md: |
+          ## Линейный поиск 🔎
+
+          Напиши функцию `linear_search(items, target)`, которая возвращает
+          **индекс** первого вхождения `target` в список `items`. Если элемента
+          нет — верни `-1`.
+
+          **Примеры:**
+          - `linear_search([3, 1, 2], 1)` → `1`
+          - `linear_search([3, 1, 2], 5)` → `-1`
+          - `linear_search([], 1)` → `-1`
+
+          > Подсказка: цикл `for i in range(len(items))` и сравнение `items[i] == target`.
+        starter_code: |
+          def linear_search(items, target):
+              # верни индекс target или -1
+              pass
+        hints:
+          - "Перебирай индексы от 0 до len(items)-1"
+          - "Как только нашёл — сразу return i"
+          - "Если цикл закончился и не нашёл — return -1"
+        tests:
+          - input: [[3, 1, 2], 1]
+            expected: 1
+          - input: [[3, 1, 2], 5]
+            expected: -1
+          - input: [[], 1]
+            expected: -1
+          - input: [[7, 7, 7], 7]
+            expected: 0
+
+      - slug: binary-search
+        title: Бинарный поиск
+        difficulty: 4
+        xp_reward: 40
+        function: binary_search
+        prompt_md: |
+          ## Бинарный поиск ⚡
+
+          Список **уже отсортирован**. Напиши функцию `binary_search(items, target)`,
+          которая находит `target` за логарифм: смотри в середину, и если цель
+          меньше — ищи в левой половине, иначе в правой. Возвращай индекс
+          или `-1`, если элемента нет.
+
+          **Примеры:**
+          - `binary_search([1, 3, 5, 7, 9], 5)` → `2`
+          - `binary_search([1, 3, 5, 7, 9], 4)` → `-1`
+          - `binary_search([2, 4, 6], 2)` → `0`
+
+          > Подсказка: границы `left` и `right`, середина `mid = (left + right) // 2`.
+        starter_code: |
+          def binary_search(items, target):
+              # найди target в отсортированном списке
+              pass
+        hints:
+          - "Заведи left = 0 и right = len(items) - 1"
+          - "Пока left <= right: mid = (left + right) // 2"
+          - "Если items[mid] < target — ищи справа (left = mid + 1), иначе слева"
+        tests:
+          - input: [[1, 3, 5, 7, 9], 5]
+            expected: 2
+          - input: [[1, 3, 5, 7, 9], 4]
+            expected: -1
+          - input: [[2, 4, 6], 2]
+            expected: 0
+          - input: [[2, 4, 6], 6]
+            expected: 2
+          - input: [[], 1]
+            expected: -1
