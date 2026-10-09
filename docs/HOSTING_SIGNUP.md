@@ -89,12 +89,24 @@
 
 ## 5. Дальнейшие деплои
 
-Код остаётся на GitHub. Два варианта (надёжный на первое время — первый):
+Код остаётся на GitHub. Заготовка авто-деплоя лежит в
+[`scripts/deploy-hf.workflow.yml`](../scripts/deploy-hf.workflow.yml) (push в `main` =
+пересборка Space ~2 мин). Её нужно **скопировать в `.github/workflows/`** — это
+делается только вручную или с GitHub-токеном, у которого есть область `workflow`
+(наш текущий токен её не имеет). Чтобы включить:
 
-1. **Вручную**: я пушу в `huggingface.co/spaces/<логин>/подземелья-python`
-   (вход по токену) — Space пересобирается сам (~2 мин).
-2. **Автоматически**: GitHub Action с секретом `HF_TOKEN` — push в `main` =
-   автодеплой (настроим позже, когда Space заработает).
+1. Добавить в GitHub **Settings → Secrets and variables → Actions**:
+
+| Тип | Имя | Значение |
+|---|---|---|
+| Secret | `HF_TOKEN` | тот же HF-токен (`hf_...`) |
+| Variable | `HF_SPACE_REPO` | `логин/podzemelya-python` |
+
+2. Скопировать `scripts/deploy-hf.workflow.yml` в `.github/workflows/deploy-hf.yml`
+   (в веб-интерфейсе GitHub: *Add file → Create new file*).
+
+Пока всё это не настроено — ничего не ломается (вручную деплой делаю я скриптом
+`HF_TOKEN=... HF_SPACE_REPO=... python3 scripts/deploy_hf.py`).
 
 ## 6. Если что-то пошло не так
 

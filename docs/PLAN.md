@@ -21,10 +21,10 @@
 ## Дальше по порядку 📋
 
 16. Настроить **SMTP** при деплое и включить `REQUIRE_EMAIL_VERIFICATION=1` (письма сейчас идут в outbox-файл — это dev-режим, `docs/DECISIONS.md` №28). На HF проверить, что исходящий 587 не блокируется.
-17. **Деплой на Hugging Face Spaces + Supabase** (выбор пользователя; заменяет Oracle, `DECISIONS.md` №51–52): регистрация по `docs/HOSTING_SIGNUP.md` → создаю Space и секреты `JWT_SECRET`/`DATABASE_URL`/`FRONTEND_URL` → смоук по реальному `*.hf.space` → затем авто-деплой из GitHub Actions (push в `main` = сборка).
+17. **Деплой на Hugging Face Spaces + Supabase** (выбор пользователя; заменяет Oracle, `DECISIONS.md` №51–52): регистрация по `docs/HOSTING_SIGNUP.md` → создаю Space и секреты `JWT_SECRET`/`DATABASE_URL`/`FRONTEND_URL` → смоук по реальному `*.hf.space` → затем авто-деплой из GitHub Actions (файл `scripts/deploy-hf.workflow.yml` → скопировать в `.github/workflows/`, задать секрет `HF_TOKEN` + переменную `HF_SPACE_REPO`; ручной вариант — `scripts/deploy_hf.py`).
 18. **Доделать песочницу** — **частично сделано 2026-10-09** (`DECISIONS.md` №53): сеть в песочнице отключена best-effort (`unshare -n`, иначе Python-заглушка; в HF Space `unshare` недоступен без прав → работает заглушка). Остаток: настоящая ядерная изоляция (`RUNNER_MODE=docker` не реализован, Docker внутри HF Space недоступен) — варианты: внешний изолятор или переезд на VPS.
 19. Новые темы: рекурсия, сортировки, поиск, графы (визуализация шагов).
-20. Нагрузочный тест «30 учеников» и бэкапы БД (Supabase: экспорт/pg_dump по расписанию или вручную из панели).
+20. Нагрузочный тест «30 учеников» — ✅ **сделан 2026-10-09** (`scripts/load_test.py`, через nginx: 30/30 регистраций и решений, медиана ~2 с; лимиты nginx подогнаны под школьный NAT — `DECISIONS.md` №54). Остались **бэкапы БД** (Supabase: экспорт/pg_dump по расписанию или вручную из панели).
 
 ## Заметки на будущее 📝 (не план, просто пригодится)
 
