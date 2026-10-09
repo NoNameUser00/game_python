@@ -1,6 +1,7 @@
-# Локальная копия, максимально близкая к боевой (Oracle Cloud).
+# Локальная копия боевого стека (и режим «офлайн-урок» в классе).
 # Запуск:  docker compose up --build
-# Игра:    http://localhost:8080
+# Игра:    http://localhost:8080  (порт меняется: WEB_PORT=18080 docker compose up)
+# Порты наружу настраиваются через .env (см. .env.example) — если 8000/8080 заняты.
 services:
   db:
     image: postgres:16-alpine
@@ -22,13 +23,13 @@ services:
       dockerfile: docker/backend.Dockerfile
     environment:
       DATABASE_URL: postgresql+psycopg://game:game-local@db:5432/game
-      JWT_SECRET: local-dev-secret           # в проде — из секретов/секретного хранилища!
+      JWT_SECRET: ${JWT_SECRET:-local-dev-secret}   # свой секрет — через .env, не в git!
       RUNNER_MODE: local                     # в проде: docker (песочница в контейнере)
     depends_on:
       db:
         condition: service_healthy
     ports:
-      - "8000:8000"
+      - "${API_PORT:-8000}:8000"
 
   web:
     build:
@@ -37,7 +38,7 @@ services:
     depends_on:
       - api
     ports:
-      - "8080:80"
+      - "${WEB_PORT:-8080}:80"
 
 volumes:
   pgdata:

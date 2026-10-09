@@ -6,12 +6,18 @@
 - память              -> RUNNER_MEMORY_MB     (по умолчанию 256 МБ)
 - размер файлов       -> 1 МБ, core-дампы отключены
 - stdin закрыт (input() невозможен), рабочая папка — временная и удаляется
+- сеть                -> отключена: если доступен `unshare -n`, код бежит в
+  отдельном сетевом namespace (ядро), иначе — Python-заглушка, ломающая
+  `socket`/`create_connection` ещё на импорте модуля
 
-Сеть НЕ блокируется (это делает только Docker на публичном сервере).
+Важно: это защита «от школьника», а не от целенаправленной атаки. На публичном
+сервере с недоверенным кодом предпочтителен `RUNNER_MODE=docker` (пока не реализован).
 """
+import functools
 import json
 import os
 import resource
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -20,6 +26,53 @@ from dataclasses import dataclass, field
 from ..config import RUNNER_CPU_SECONDS, RUNNER_MEMORY_MB, RUNNER_TIMEOUT_SECONDS
 
 RESULT_FILE = "__result__.json"
+
+# Заглушка сети, вклеивается ПЕРЕД кодом ученика (не влияет на номера строк:
+# для ошибок времени выполнения школьнику показывается только последняя строка
+# traceback, а ошибки синтаксиса ловятся отдельным compile()).
+_NET_GUARD = '''\
+# ===== песочница: сеть отключена =====
+def __block_network():
+    import socket as __sk
+
+    def __blocked(*a, **k):
+        raise OSError("Сеть в песочнице отключена")
+
+    class __BlockedSocket(__sk.socket):
+        def __init__(self, *a, **k):
+            raise OSError("Сеть в песочнице отключена")
+
+    __sk.socket = __BlockedSocket
+    __sk.socketpair = __blocked
+    __sk.create_connection = __blocked
+    __sk.create_server = __blocked
+    try:
+        import _socket as __csk
+        __csk.socket = __BlockedSocket
+    except Exception:
+        pass
+
+
+try:
+    __block_network()
+except Exception:
+    pass
+del __block_network
+'''
+
+
+@functools.lru_cache(maxsize=1)
+def _unshare_available() -> bool:
+    """Можно ли резать сеть ядром: `unshare -n` (нужны права)."""
+    exe = shutil.which("unshare")
+    if not exe:
+        return False
+    try:
+        probe = subprocess.run([exe, "-n", "true"], stdout=subprocess.DEVNULL,
+                               stderr=subprocess.DEVNULL, timeout=3)
+        return probe.returncode == 0
+    except Exception:
+        return False
 
 
 @dataclass
@@ -39,6 +92,7 @@ class RunOutcome:
 def _build_script(code: str, function: str, args_json: str) -> str:
     return f"""\
 # -*- coding: utf-8 -*-
+{_NET_GUARD}
 {code}
 
 # ===== harness (автогенерация, не редактируй) =====
@@ -117,9 +171,14 @@ class LocalRunner:
             with open(script_path, "w", encoding="utf-8") as fh:
                 fh.write(_build_script(code, function, json.dumps(args, ensure_ascii=False)))
 
+            cmd = [sys.executable, "-I", script_path]
+            if _unshare_available():
+                # Сеть режется ядром: код бежит в своём сетевом namespace.
+                cmd = [shutil.which("unshare"), "-n", *cmd]
+
             try:
                 proc = subprocess.run(
-                    [sys.executable, "-I", script_path],
+                    cmd,
                     cwd=tmp,
                     stdin=subprocess.DEVNULL,
                     stdout=subprocess.PIPE,

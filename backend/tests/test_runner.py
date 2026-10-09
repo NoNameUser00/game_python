@@ -63,3 +63,27 @@ def test_list_task():
     tests = [{"input": [[1, 5, 3]], "expected": 5}]
     outcome = runner.run("def find_max(items):\n    return max(items)", "find_max", tests)
     assert outcome.status == "accepted"
+
+
+def test_outbound_network_blocked():
+    """Код ученика не может сходить в сеть (ядро или Python-заглушка)."""
+    code = ("import socket\n\n"
+            "def total(n):\n"
+            "    socket.create_connection(('1.1.1.1', 53), timeout=2)\n"
+            "    return n")
+    outcome = runner.run(code, "total", TESTS)
+    assert outcome.status == "failed"
+    assert not outcome.tests[0].passed
+
+
+def test_socket_message_when_unshare_absent():
+    """Без `unshare` работает встроенная заглушка с понятным сообщением."""
+    import pytest
+
+    from app.runner import local
+    if local._unshare_available():
+        pytest.skip("unshare доступен — сеть режется на уровне ядра")
+    code = "import socket\n\n\ndef total(n):\n    return socket.socket()"
+    outcome = runner.run(code, "total", TESTS)
+    assert outcome.status == "failed"
+    assert "Сеть в песочнице отключена" in outcome.tests[0].message
